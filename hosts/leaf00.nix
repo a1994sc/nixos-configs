@@ -7,7 +7,7 @@
 {
   imports =
     [
-      ../modules/k3s-agent.nix
+#      ../modules/k3s-agent.nix
       ../modules/raspberry-pi.nix
       ../modules/main-config.nix
     ];
