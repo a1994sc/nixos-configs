@@ -3,7 +3,7 @@
 {
   imports = [
     ./sops.yaml
-  ]
+  ];
 
   security.pki.certificateFiles = [ "/etc/nixos/misc/cert" ];
 
