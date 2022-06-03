@@ -6,11 +6,10 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./modules/k3s-agent.nix
-      ./modules/raspberry-pi.nix
-      ./modules/main-config.nix
+    [ 
+      ../modules/k3s-agent.nix
+      ../modules/raspberry-pi.nix
+      ../modules/main-config.nix
     ];
 
   networking.hostName = "leaf01";

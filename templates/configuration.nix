@@ -6,15 +6,8 @@
 
 {
   imports =
-    [ 
-      ../modules/k3s-server.nix
-      ../modules/raspberry-pi.nix
-      ../modules/main-config.nix
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ./hosts/<>.nix
     ];
-
-  networking.hostName = "trunk02";
-
-  nix.gc.dates = "Sun 02:00";
-
-  system.autoUpgrade.dates = "Sun 04:00";
 }

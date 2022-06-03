@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./sops.yaml
+  ]
+
   security.pki.certificateFiles = [ "/etc/nixos/misc/cert" ];
 
   boot.loader.grub.enable = false;
@@ -48,6 +52,7 @@
     vim
     wget
     htop
+    git
   ];
 
   system.autoUpgrade = {
