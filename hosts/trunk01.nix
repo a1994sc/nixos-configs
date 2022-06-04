@@ -7,9 +7,10 @@
 {
   imports =
     [ 
-#      ../modules/k3s/arm64-server.nix
+      ../modules/k3s/arm64-server.nix
       ../modules/raspberry-pi.nix
       ../modules/main-config.nix
+      ../modules/sops.nix
     ];
 
   networking.hostName = "trunk01";
