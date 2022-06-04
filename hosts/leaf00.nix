@@ -18,4 +18,20 @@
   nix.gc.dates = "Mon 02:00";
 
   system.autoUpgrade.dates = "Mon 04:00";
+
+  sops.secrets.k3s-server-token.sopsFile = ./user/leaf00.yaml;
+  sops.secrets.my-password.neededForUsers = true;
+
+  users.users.test = {
+    isNormalUser = true;
+    extraGroups  = [ ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTN+22xUz/NIZ/+E3B7bSQAl1Opxg0N7jIVGlAxTJw2"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoTjm581SSJi51VuyDXkGj+JThQOavxicFgK1Z/YlN"
+    ];
+    passwordFile = config.sops.secrets.password.path;
+  };
+
+
+#  users.users.ascii.passwordFile = config.sops.secrets.my-password.path;
 }
