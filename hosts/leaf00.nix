@@ -7,7 +7,7 @@
 {
   imports =
     [
-#      ../modules/k3s/arm64-agent.nix
+      ../modules/k3s/arm64-agent.nix
       ../modules/raspberry-pi.nix
       ../modules/main-config.nix
       ../modules/sops.nix

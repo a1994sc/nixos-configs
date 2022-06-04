@@ -35,7 +35,7 @@
          "--kube-controller-arg node-monitor-grace-period=20s"
          "--kubelet-arg node-status-update-frequency=5s"
          "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
-         "--kubelet-arg=config=./k3s_kubelet.yaml"
+         "--kubelet-arg=config=/etc/nixos/modules/k3s/k3s_kubelet.yaml"
        ];
      };
   };

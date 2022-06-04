@@ -25,7 +25,7 @@
          "${pkgs.k3s}/bin/k3s agent"
          "--token-file ${config.sops.secrets.k3s-server-token.path}"
          "--server https://10.2.25.99:6443"
-         "--kubelet-arg=config=./k3s_kubelet.yaml"
+         "--kubelet-arg=config=/etc/nixos/modules/k3s/k3s_kubelet.yaml"
        ];
      };
   };

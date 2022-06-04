@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  security.pki.certificateFiles = [ "/etc/nixos/misc/cert" ];
+  security.pki.certificateFiles = [ "/etc/nixos/cert" ];
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
