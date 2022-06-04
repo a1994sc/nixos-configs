@@ -11,7 +11,7 @@ in {
       k3s
     ];
 
-    sops.secrets.k3s-server-token.sopsFile = ../secrets/k3s.yaml
+    sops.secrets.k3s-server-token.sopsFile = ../../secrets/k3s.yaml;
 
     #  virtualisation.containerd = {
     #    enable = true;

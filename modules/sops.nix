@@ -7,4 +7,6 @@
     age
     gnupg
   ];
+
+  sops.age.keyFile = "/home/ascii/.config/sops/age/keys.txt";
 }

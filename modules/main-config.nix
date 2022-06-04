@@ -1,10 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ./sops.nix
-  ];
-
   security.pki.certificateFiles = [ "/etc/nixos/misc/cert" ];
 
   boot.loader.grub.enable = false;

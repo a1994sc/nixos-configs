@@ -7,7 +7,7 @@
 {
   imports =
     [ 
-      ../modules/k3s-server.nix
+#      ../modules/k3s/arm64-server.nix
       ../modules/raspberry-pi.nix
       ../modules/main-config.nix
     ];

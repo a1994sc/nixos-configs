@@ -25,7 +25,7 @@
          "${pkgs.k3s}/bin/k3s server"
          "--tls-san 10.2.25.99"
          "--server https://10.2.25.99:6443"
-         "--token-file ${lib.mkDefault config.sops.secrets.k3s-server-token.path}"
+         "--token-file ${config.sops.secrets.k3s-server-token.path}"
          "--disable traefik,servicelb,coredns,metrics-server"
          "--write-kubeconfig-mode=644"
          "--kube-apiserver-arg default-not-ready-toleration-seconds=30"
@@ -35,7 +35,7 @@
          "--kube-controller-arg node-monitor-grace-period=20s"
          "--kubelet-arg node-status-update-frequency=5s"
          "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
-         "--kubelet-arg=config=/etc/nixos/misc/configs/k3s_kublet.yaml"
+         "--kubelet-arg=config=./k3s_kubelet.yaml"
        ];
      };
   };
