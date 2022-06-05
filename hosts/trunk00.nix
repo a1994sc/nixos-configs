@@ -7,7 +7,7 @@
 {
   imports =
     [ 
-      ../modules/k3s/arm64-server.nix
+      ../modules/k3s/.
       ../modules/raspberry-pi.nix
       ../modules/main-config.nix
       ../modules/sops.nix
@@ -20,10 +20,37 @@
   system.autoUpgrade.dates = "Fri 04:00";
 
   # over-ride the default k3s-server cmd as trunk00 acts as the cluster starter
-  systemd.services.k3s-server.serviceConfig.ExecStart = toString [
+  nixpkgs.overlays = [
+    (self: super: {
+      k3s = super.callPackage ../pkgs/k3s-arm64.nix {};
+    })
+  ];
+
+  systemd.services.k3s-server = {
+     # Unit
+     description = "Lightweight Kubernetes";
+     documentation = [ "https://k3s.io" ];
+     wants = [ "network-online.target" ];
+     # Install
+     wantedBy = [ "multi-user.target" ];
+     # Service
+     serviceConfig = {
+       Type = "exec";
+       KillMode = "process";
+       Delgate = "yes";
+       LimitNOFILE = "infinity";
+       LimitNPROC = "infinity";
+       LimitCORE = "infinity";
+       TasksMax = "infinity";
+       TimeoutStartSec = "0";
+       Restart = "always";
+       RestartSec = "5s";
+       ExecStartPre = "${pkgs.kmod}/bin/modprobe -a br_netfilter overlay";
+       ExecStart = toString [
          "${pkgs.k3s}/bin/k3s server"
          "--tls-san 10.2.25.99"
          "--cluster-init"
+         "--server https://10.2.25.99:6443"
          "--token-file ${config.sops.secrets.k3s-server-token.path}"
          "--disable traefik,servicelb,coredns,metrics-server"
          "--write-kubeconfig-mode=644"
@@ -36,4 +63,6 @@
          "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
          "--kubelet-arg=config=/etc/nixos/modules/k3s/k3s_kubelet.yaml"
        ];
+     };
+  };
 }
