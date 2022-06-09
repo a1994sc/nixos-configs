@@ -4,7 +4,7 @@ keys:
   - &trunk02  age195lv4eae7ps5htcx7gffllatqzjtqa3rahap3ehdpgwf3wx85ctqsl9uyz
   - &leaf00   age153gcfuvuyk5sssp3n4wafnljgqx09ms69rda7h2rferh20fw4ctqp9ukmz
   - &leaf01   age1ae4cr3n7szs09eall2zchuax3t9jyezs8zew9fnerk229ealgs5q52f3r3
-  - &leaf02   age1ae4cr3n7szs09eall2zchuax3t9jyezs8zew9fnerk229ealgs5q52f3r3
+  - &leaf02   age18kmyqpehewsa66ms9n0nu4xu6c8upmuq4sa5lyp8mqxcfnlgyp9q86xuet
 creation_rules:
   - path_regex: hosts/user/leaf00.yaml
     key_groups:
