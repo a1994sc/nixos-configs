@@ -1,6 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }: let
+  kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
+    ''
+      apiVersion: kubelet.config.k8s.io/v1beta1
+      kind: KubeletConfiguration
 
-{
+      shutdownGracePeriod: 30s
+      shutdownGracePeriodCriticalPods: 10s
+    '';
+in {
   systemd.services.k3s-server = {
      # Unit
      description = "Lightweight Kubernetes";
@@ -35,7 +42,7 @@
          "--kube-controller-arg node-monitor-grace-period=20s"
          "--kubelet-arg node-status-update-frequency=5s"
          "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
-         "--kubelet-arg=config=/etc/nixos/modules/k3s/k3s_kubelet.yaml"
+         "--kubelet-arg=config=${kubeletConfig}"
        ];
      };
   };

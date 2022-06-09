@@ -1,6 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }: let
+  kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
+    ''
+      apiVersion: kubelet.config.k8s.io/v1beta1
+      kind: KubeletConfiguration
 
-{
+      shutdownGracePeriod: 30s
+      shutdownGracePeriodCriticalPods: 10s
+    '';
+in {
   systemd.services.k3s-agent = {
      # Unit
      description = "Lightweight Kubernetes";
@@ -25,7 +32,7 @@
          "${pkgs.k3s}/bin/k3s agent"
          "--token-file ${config.sops.secrets.k3s-server-token.path}"
          "--server https://10.2.25.99:6443"
-         "--kubelet-arg=config=/etc/nixos/modules/k3s/k3s_kubelet.yaml"
+         "--kubelet-arg=config=${kubeletConfig}"
        ];
      };
   };
