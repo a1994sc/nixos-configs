@@ -7,13 +7,13 @@
 {
   imports =
     [ 
-#      ../modules/k3s/arm64-agent.nix
+      ../modules/k3s/arm64-agent.nix
       ../modules/raspberry-pi.nix
       ../modules/main-config.nix
       ../modules/sops.nix
     ];
 
-  networking.hostName = "leaf01";
+  networking.hostName = "leaf02";
 
   nix.gc.dates = "Wed 02:00";
 
