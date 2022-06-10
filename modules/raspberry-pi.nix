@@ -9,6 +9,9 @@
       "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/936e4649098d6a5e0762058cb7687be1b2d90550.tar.gz" }/raspberry-pi/4"
     ];
 
+  boot.loader.grub.enable = false;
+  boot.loader.generic-extlinux-compatible.enable = true;
+
   boot = {
 #    kernelPackages = pkgs.linuxPackages_rpi4;
     tmpOnTmpfs = false;

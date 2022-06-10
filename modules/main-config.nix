@@ -3,9 +3,6 @@
 {
   security.pki.certificateFiles = [ "/etc/nixos/cert" ];
 
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
-
   programs.bash.enableCompletion = true;
 
   networking.domain   = "adrp.xyz";
