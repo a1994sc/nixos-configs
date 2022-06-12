@@ -2,9 +2,16 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }: let
+  kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
+    ''
+      apiVersion: kubelet.config.k8s.io/v1beta1
+      kind: KubeletConfiguration
 
-{
+      shutdownGracePeriod: 30s
+      shutdownGracePeriodCriticalPods: 10s
+    '';
+in {
   imports =
     [ 
       ../modules/k3s/.
@@ -63,7 +70,7 @@
         "--kube-controller-arg node-monitor-grace-period=20s"
         "--kubelet-arg node-status-update-frequency=5s"
         "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
-        "--kubelet-arg=config=/etc/nixos/modules/k3s/k3s_kubelet.yaml"
+        "--kubelet-arg=config=${kubeletConfig}"
       ];
     };
   };
