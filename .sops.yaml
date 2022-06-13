@@ -1,4 +1,5 @@
 keys:
+  - &master   age1xqc2h0gazssmk3mchql6epwmkap7prv9nuknzprr9q2pzscprvfs995ukj
   - &trunk00  age1vvwz4n52040ncrl7u74h9nx0hf4mmwec42p3j8pyel2num3meaesgcvqgu
   - &trunk01  age1wndn63aj2k6h0zxmt7zmjxghmy99dag059nvezwtgmqjw48wuu3sz2n6ms
   - &trunk02  age195lv4eae7ps5htcx7gffllatqzjtqa3rahap3ehdpgwf3wx85ctqsl9uyz
@@ -8,46 +9,32 @@ keys:
   - &leaf01   age1ae4cr3n7szs09eall2zchuax3t9jyezs8zew9fnerk229ealgs5q52f3r3
   - &leaf02   age18kmyqpehewsa66ms9n0nu4xu6c8upmuq4sa5lyp8mqxcfnlgyp9q86xuet
   - &leaf10   age19a5e0dnje6r974q7mwnl56r8dwe7fzgvczdqdatqvfntkmge0szq75znnz
+  - &leaf11   age1ft9jmmhqmf8032sle0wj9du63x2hwgm8c2z6ufa2v56gmem70qqsglwz29
+  - &leaf12   age1uc58qu5yc0kmzkvswd6nn7mjnqnhnspss33prqgjpz0jkfv5g9ksk5dmnf
 creation_rules:
-  - path_regex: hosts/user/trunk00.yaml
+  - path_regex: modules/k3s/secrets/server.yaml
     key_groups:
       - age:
+          - *master
           - *trunk00
-  - path_regex: hosts/user/trunk01.yaml
-    key_groups:
-      - age:
           - *trunk01
-  - path_regex: hosts/user/trunk02.yaml
-    key_groups:
-      - age:
           - *trunk02
-  - path_regex: hosts/user/trunk10.yaml
-    key_groups:
-      - age:
           - *trunk10
-  - path_regex: hosts/user/trunk11.yaml
-    key_groups:
-      - age:
           - *trunk11
-  - path_regex: hosts/user/leaf00.yaml
+  - path_regex: modules/k3s/secrets/agent.yaml
     key_groups:
       - age:
+          - *master
           - *leaf00
-  - path_regex: hosts/user/leaf01.yaml
-    key_groups:
-      - age:
           - *leaf01
-  - path_regex: hosts/user/leaf02.yaml
-    key_groups:
-      - age:
           - *leaf02
-  - path_regex: hosts/user/leaf10.yaml
-    key_groups:
-      - age:
           - *leaf10
+          - *leaf11
+          - *leaf12
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
       - age:
+          - *master
           - *trunk00
           - *trunk01
           - *trunk02
@@ -57,3 +44,5 @@ creation_rules:
           - *leaf01
           - *leaf02
           - *leaf10
+          - *leaf11
+          - *leaf12
