@@ -11,7 +11,7 @@ in {
       k3s
     ];
 
-    sops.secrets.k3s-server-token.sopsFile = ../../secrets/k3s.yaml;
+#    sops.secrets.k3s-server-token.sopsFile = ../../secrets/k3s.yaml;
 
     networking.extraHosts =
       ''
@@ -25,19 +25,20 @@ in {
         10.2.25.62  leaf02 
         10.2.25.70  leaf10
         10.2.25.71  leaf11
+        10.2.25.72  leaf12
       '';
 
-#    virtualisation.containerd.enable = true;
-#    virtualisation.containerd.settings = {
-#      version = 2;
-#      plugins."io.containerd.grpc.v1.cri" = {
-#        cni.conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
-#        # FIXME: upstream
-#        cni.bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
-#          mkdir -p $out
-#          ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
-#        ''}";
-#      };
-#    };
+    virtualisation.containerd.enable = true;
+    virtualisation.containerd.settings = {
+      version = 2;
+      plugins."io.containerd.grpc.v1.cri" = {
+        cni.conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
+        # FIXME: upstream
+        cni.bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
+          mkdir -p $out
+          ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
+        ''}";
+      };
+    };
   };
 }
