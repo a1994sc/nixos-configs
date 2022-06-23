@@ -10,12 +10,19 @@
 in {
   sops.secrets.token.sopsFile = ./secrets/server.yaml;
 
+  environment.systemPackages = with pkgs; [
+    kubectl
+    helm
+    cri-tools
+  ];
+
   systemd.services.k3s-server = {
     # Unit
     description = "Lightweight Kubernetes";
     documentation = [ "https://k3s.io" ];
-    wants = [ "network-online.target" "containerd.service" ];
-    after = [ "containerd.service" ];
+    wants = [ "network-online.target" ];
+#    wants = [ "network-online.target" "containerd.service" ];
+#    after = [ "containerd.service" ];
     # Install
     wantedBy = [ "multi-user.target" ];
     # Service
@@ -45,9 +52,10 @@ in {
         "--kube-controller-arg node-monitor-grace-period=20s"
         "--kubelet-arg node-status-update-frequency=5s"
         "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
-        "--flannel-backend=none"
-        "--disable-network-policy"
+#        "--flannel-backend=none"
+#        "--disable-network-policy"
         "--kubelet-arg=config=${kubeletConfig}"
+#        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
   };

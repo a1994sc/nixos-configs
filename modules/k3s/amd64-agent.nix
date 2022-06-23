@@ -3,7 +3,7 @@
 {
   imports = [
     ./.
-    ./service-agent.nix
+    /etc/nixos/modules/k3s/service-agent.nix
   ];
 
   nixpkgs.overlays = [

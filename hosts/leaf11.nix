@@ -7,10 +7,10 @@
 {
   imports =
     [ 
-      ../modules/k3s/amd64-agent.nix
-      ../modules/qemu.nix
-      ../modules/main-config.nix
-      ../modules/sops.nix
+      /etc/nixos/modules/k3s/amd64-agent.nix
+      /etc/nixos/modules/qemu.nix
+      /etc/nixos/modules/main-config.nix
+      /etc/nixos/modules/sops.nix
     ];
 
   networking.hostName = "leaf11";

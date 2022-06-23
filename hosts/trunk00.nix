@@ -14,10 +14,10 @@
 in {
   imports =
     [ 
-      ../modules/k3s/.
-      ../modules/raspberry-pi.nix
-      ../modules/main-config.nix
-      ../modules/sops.nix
+      /etc/nixos/modules/k3s/.
+      /etc/nixos/modules/raspberry-pi.nix
+      /etc/nixos/modules/main-config.nix
+      /etc/nixos/modules/sops.nix
     ];
 
   networking.hostName = "trunk00";
@@ -29,11 +29,16 @@ in {
   # over-ride the default k3s-server cmd as trunk00 acts as the cluster starter
   nixpkgs.overlays = [
     (self: super: {
-      k3s = super.callPackage ../pkgs/k3s-arm64.nix {};
+      k3s = super.callPackage /etc/nixos/pkgs/k3s-arm64.nix {};
     })
   ];
 
-  sops.secrets.token.sopsFile = ./secrets/server.yaml;
+  environment.systemPackages = with pkgs; [
+    kubectl
+    helm
+  ];
+
+  sops.secrets.token.sopsFile = ./modules/k3s/secrets/server.yaml;
 
   systemd.services.k3s-server = {
     # Unit

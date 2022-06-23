@@ -7,10 +7,10 @@
 {
   imports =
     [ 
-      ../modules/k3s/arm64-agent.nix
-      ../modules/raspberry-pi.nix
-      ../modules/main-config.nix
-      ../modules/sops.nix
+      /etc/nixos/modules/k3s/arm64-agent.nix
+      /etc/nixos/modules/raspberry-pi.nix
+      /etc/nixos/modules/main-config.nix
+      /etc/nixos/modules/sops.nix
     ];
 
   networking.hostName = "leaf01";
