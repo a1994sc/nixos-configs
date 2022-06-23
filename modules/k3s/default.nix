@@ -1,5 +1,6 @@
-{ config, lib, pkgs, ...}: let
-in {
+{ config, lib, pkgs, ...}: 
+
+{
   config = {
     boot.kernelParams = [
       "cgroup_memory=1"
@@ -7,11 +8,9 @@ in {
     ];
 
     environment.systemPackages = with pkgs; [
-      kubectl
       k3s
+      cri-tools
     ];
-
-#    sops.secrets.k3s-server-token.sopsFile = ../../secrets/k3s.yaml;
 
     networking.extraHosts =
       ''
@@ -28,6 +27,12 @@ in {
         10.2.25.72  leaf12
       '';
 
+#    environment.etc."cni".source = pkgs.buildEnv {
+#      name = "etc-cni-bin";
+#      paths = [ pkgs.cni-plugins pkgs.cilium-cli ];
+#      pathsToLink = [ "/bin" ];
+#    };
+#
     virtualisation.containerd.enable = true;
     virtualisation.containerd.settings = {
       version = 2;
@@ -39,6 +44,6 @@ in {
           ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
         ''}";
       };
-    };
+    };  
   };
 }

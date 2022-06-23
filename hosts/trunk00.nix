@@ -33,6 +33,8 @@ in {
     })
   ];
 
+  sops.secrets.token.sopsFile = ./secrets/server.yaml;
+
   systemd.services.k3s-server = {
     # Unit
     description = "Lightweight Kubernetes";
@@ -56,10 +58,10 @@ in {
       ExecStartPre = "${pkgs.kmod}/bin/modprobe -a br_netfilter overlay";
       ExecStart = toString [
         "${pkgs.k3s}/bin/k3s server"
-        "--tls-san 10.2.25.98,10.2.25.98"
+        "--tls-san 10.2.25.99"
         "--cluster-init"
-        "--server https://10.2.25.98:6443"
-        "--token-file ${config.sops.secrets.k3s-server-token.path}"
+        "--server https://10.2.25.99:6443"
+        "--token-file ${config.sops.secrets.token.path}"
         "--disable traefik,servicelb,coredns,metrics-server"
         "--write-kubeconfig-mode=644"
         "--kube-apiserver-arg default-not-ready-toleration-seconds=30"
@@ -72,6 +74,7 @@ in {
         "--flannel-backend=none"
         "--disable-network-policy"
         "--kubelet-arg=config=${kubeletConfig}"
+        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
   };
