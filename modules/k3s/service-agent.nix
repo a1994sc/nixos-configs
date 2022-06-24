@@ -18,9 +18,8 @@ in {
     # Unit
     description = "Lightweight Kubernetes";
     documentation = [ "https://k3s.io" ];
-    wants = [ "network-online.target" ];
-#    wants = [ "network-online.target" "containerd.service" ];
-#    after = [ "containerd.service" ];
+    wants = [ "network-online.target" "containerd.service" ];
+    after = [ "containerd.service" ];
     # Install
     wantedBy = [ "multi-user.target" ];
     # Service
@@ -41,7 +40,7 @@ in {
         "--token-file ${config.sops.secrets.token.path}"
         "--server https://10.2.25.99:6443"
         "--kubelet-arg=config=${pkgs.kubeletConfig}"
-#        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
   };
