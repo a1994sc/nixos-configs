@@ -36,9 +36,10 @@ in {
   environment.systemPackages = with pkgs; [
     kubectl
     helm
+    cri-tools
   ];
 
-  sops.secrets.token.sopsFile = ./modules/k3s/secrets/server.yaml;
+  sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/server.yaml;
 
   systemd.services.k3s-server = {
     # Unit
@@ -76,8 +77,8 @@ in {
         "--kube-controller-arg node-monitor-grace-period=20s"
         "--kubelet-arg node-status-update-frequency=5s"
         "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
-        "--flannel-backend=none"
-        "--disable-network-policy"
+        # "--flannel-backend=none"
+        # "--disable-network-policy"
         "--kubelet-arg=config=${kubeletConfig}"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
