@@ -36,7 +36,7 @@ in {
   environment.systemPackages = with pkgs; [
     kubectl
     helm
-    cri-tools
+    # cri-tools
   ];
 
   sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/server.yaml;
@@ -80,7 +80,7 @@ in {
         # "--flannel-backend=none"
         # "--disable-network-policy"
         "--kubelet-arg=config=${kubeletConfig}"
-        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+#        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
   };
