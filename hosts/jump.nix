@@ -10,7 +10,6 @@
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/sops.nix
       /etc/nixos/modules/bare.nix
-      /etc/nixos/modules/k3s/.
     ];
 
   networking.hostName = "jump-host";
@@ -26,8 +25,9 @@
 
   sops.secrets.jump = {
     owner = "ascii";
+    format = "binary";
     path = "/home/ascii/.ssh/jump";
-    sopsFile = /etc/nixos/secrets/;
-    mode = 0600;
+    sopsFile = /etc/nixos/secrets/jump;
+    mode = "0600";
   };
 }

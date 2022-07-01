@@ -22,16 +22,16 @@
       min-free = ${toString (100 * 1024 * 1024)}
       max-free = ${toString (1024 * 1024 * 1024 * 2)}
     '';
+    optimise = {
+      automatic = true;
+      dates = [ "@daily" ];
+    };
+    settings.auto-optimise-store = true;
   };
 
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  nix.settings.auto-optimise-store = true;
-  nix.optimise = {
-    automatic = true;
-    dates = "@daily";
-  };
 
   networking.useDHCP = false;
   networking.interfaces.eth0.useDHCP = true;
@@ -44,7 +44,7 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTN+22xUz/NIZ/+E3B7bSQAl1Opxg0N7jIVGlAxTJw2"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoTjm581SSJi51VuyDXkGj+JThQOavxicFgK1Z/YlN"
-      "ssh-ed448 AAAACXNzaC1lZDQ0OAAAADkKeOD0/I1Atxq9CdAvovQv0fIHrPz4mhwzwOu7/ilw9ALPuAWVz468m/jhZ0/5U4+eXzfQOVZBDwA="
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1EodSurI32bXhbBATgr5t4TM2kP1ErIutYClLoz6LV" # jump host
     ];
   };
 
