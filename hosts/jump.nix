@@ -40,7 +40,7 @@
     mode = "0600";
   };
 
-  sops.secrets."jump-jump" = {
+  sops.secrets.host = {
     owner = "jump";
     format = "binary";
     path = "/home/jump/.ssh/jump";
