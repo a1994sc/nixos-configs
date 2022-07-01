@@ -8,7 +8,7 @@
       shutdownGracePeriodCriticalPods: 10s
     '';
 in {
-  sops.secrets.token.sopsFile = ./secrets/server.yaml;
+  sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/server.yaml;
 
   environment.systemPackages = with pkgs; [
     kubectl

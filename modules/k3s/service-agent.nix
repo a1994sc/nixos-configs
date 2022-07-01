@@ -8,7 +8,7 @@
       shutdownGracePeriodCriticalPods: 10s
     '';
 in {
-  sops.secrets.token.sopsFile = ./secrets/agent.yaml;
+  sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/agent.yaml;
 
   # environment.systemPackages = with pkgs; [
   #   cri-tools
