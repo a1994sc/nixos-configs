@@ -19,7 +19,4 @@
 
   system.autoUpgrade.dates = "Tue 04:00";
 
-  sops.secrets.password.sopsFile = ./user/leaf01.yaml;
-  sops.secrets.password.neededForUsers = true;
-#  users.users.ascii.passwordFile = config.sops.secrets.password.path;
 }

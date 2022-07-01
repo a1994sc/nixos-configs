@@ -9,6 +9,7 @@
     [ 
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/sops.nix
+      /etc/nixos/modules/bare.nix
       /etc/nixos/modules/k3s/.
     ];
 
@@ -17,6 +18,11 @@
   nix.gc.dates = "Wed 02:00";
 
   system.autoUpgrade.dates = "Wed 04:00";
+
+  environment.systemPackages = with pkgs; [
+    kubectl
+    helm
+  ];
 
   sops.secrets.jump = {
     owner = "ascii";

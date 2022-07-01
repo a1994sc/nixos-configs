@@ -18,4 +18,5 @@
   nix.gc.dates = "Sat 02:00";
 
   system.autoUpgrade.dates = "Sat 04:00";
+
 }

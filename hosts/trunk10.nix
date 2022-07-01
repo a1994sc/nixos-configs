@@ -19,13 +19,4 @@
 
   system.autoUpgrade.dates = "Mon 04:00";
 
-  #FIXME: Added manually because it wasn't respecting "main-config.nix" creatation of 'ascii'
-  users.users.ascii = {
-    isNormalUser = true;
-    extraGroups  = [ "wheel" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTN+22xUz/NIZ/+E3B7bSQAl1Opxg0N7jIVGlAxTJw2"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoTjm581SSJi51VuyDXkGj+JThQOavxicFgK1Z/YlN"
-    ];
-  };
 }
