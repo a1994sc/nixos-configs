@@ -34,7 +34,6 @@
 
   sops.secrets.ascii = {
     owner = "ascii";
-    format = "binary";
     path = "/home/ascii/.ssh/jump";
     sopsFile = /etc/nixos/secrets/ascii.yaml;
     mode = "0600";
@@ -42,7 +41,6 @@
 
   sops.secrets.jump = {
     owner = "jump";
-    format = "binary";
     path = "/home/jump/.ssh/jump";
     sopsFile = /etc/nixos/secrets/jump.yaml;
     mode = "0600";
