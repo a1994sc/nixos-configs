@@ -27,7 +27,7 @@
     owner = "ascii";
     format = "binary";
     path = "/home/ascii/.ssh/jump";
-    sopsFile = /etc/nixos/secrets/jump;
+    sopsFile = /etc/nixos/secrets/jump.yaml;
     mode = "0600";
   };
 }
