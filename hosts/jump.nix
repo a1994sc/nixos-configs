@@ -10,6 +10,7 @@
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/sops.nix
       /etc/nixos/modules/bare.nix
+      /etc/nixos/modules/tailscale.nix
     ];
 
   networking.hostName = "jump-host";
@@ -46,8 +47,8 @@
     mode = "0600";
   };
 
-  boot.kernel.sysctl = toString [
-    "net.ipv4.ip_forward = 1"
-    "net.ipv6.conf.all.forwarding = 1"
-  ];
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
+  };
 }
