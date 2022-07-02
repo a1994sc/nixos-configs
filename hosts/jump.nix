@@ -45,4 +45,9 @@
     sopsFile = /etc/nixos/secrets/jump.yaml;
     mode = "0600";
   };
+
+  boot.kernel.sysctl = toString [
+    "net.ipv4.ip_forward = 1"
+    "net.ipv6.conf.all.forwarding = 1"
+  ];
 }
