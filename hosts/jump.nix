@@ -11,6 +11,7 @@
       /etc/nixos/modules/sops.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
+      /etc/nixos/modules/infnoise.nix
     ];
 
   networking.hostName = "jump-host";
@@ -22,6 +23,9 @@
   environment.systemPackages = with pkgs; [
     kubectl
     helm
+    linode-cli
+    terraform
+    ansible
   ];
 
   users.users.jump = {
