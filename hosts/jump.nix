@@ -28,6 +28,10 @@
     (self: super: {
       small-cli = super.callPackage /etc/nixos/pkgs/smallstep/cli.nix {};
     })
+
+    (self: super: {
+      helm = super.callPackage /etc/nixos/pkgs/helm-amd64.nix {};
+    })
   ];
 
   environment.systemPackages = with pkgs; [

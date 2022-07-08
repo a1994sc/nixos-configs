@@ -5,7 +5,7 @@ pkgs.stdenv.mkDerivation {
 
   sourceRoot = ".";
 
-  src =  fetchFromGitHub {
+  src = pkgs.fetchFromGitHub {
     owner = "smallstep";
     repo = "cli";
     rev = "ffe7c00a1040722c7606bced81a5a4ecc8bd8fe5";
