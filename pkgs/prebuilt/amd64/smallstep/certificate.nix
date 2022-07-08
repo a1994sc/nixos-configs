@@ -16,5 +16,6 @@ in pkgs.stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     cp $src $out/bin/step-ca
+    chmod +x $out/bin/step-ca
   '';
 }

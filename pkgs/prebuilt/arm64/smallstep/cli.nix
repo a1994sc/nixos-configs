@@ -15,7 +15,7 @@ in pkgs.stdenv.mkDerivation {
   phases = [ "installPhase" ];
   installPhase = ''
     mkdir -p $out/bin
-    cp $src $out/bin/*
-    chmod +x $out/bin/*
+    cp $src $out/bin/step
+    chmod +x $out/bin/step
   '';
 }
