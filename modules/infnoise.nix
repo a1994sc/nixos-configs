@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
-  nixpkgs.overlays = [
-    (self: super: {
-      infnoise = super.callPackage /etc/nixos/pkgs/build/infnoise.nix {};
-    })
-  ];
+ # nixpkgs.overlays = [
+ #   (self: super: {
+ #     infnoise = super.callPackage /etc/nixos/pkgs/build/infnoise.nix {};
+ #   })
+ # ];
 
   environment.systemPackages = with pkgs; [
     infnoise

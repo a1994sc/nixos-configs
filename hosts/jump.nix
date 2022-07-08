@@ -11,6 +11,7 @@
       /etc/nixos/modules/sops.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
+      /etc/nixos/modules/infnoise.nix
       /etc/nixos/modules/smallstep/amd64/certificate.nix
       /etc/nixos/modules/smallstep/amd64/cli.nix
     ];
