@@ -8,7 +8,7 @@
 
   nixpkgs.overlays = [
     (self: super: {
-      k3s = super.callPackage ../../pkgs/k3s-arm64.nix {};
+      k3s = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/k3s.nix {};
     })
   ];
 }

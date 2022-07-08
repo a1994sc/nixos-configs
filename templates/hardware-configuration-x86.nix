@@ -23,6 +23,11 @@
       fsType = "vfat";
     };
 
+  fileSystems."/tmp" =
+    { fsType  = "tmpfs";
+      options = [ "rw" "nodev" "nosuid" "size=8G" ];
+    };
+
   swapDevices = [ ];
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

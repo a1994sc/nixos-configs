@@ -1,15 +1,17 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.stdenv.mkDerivation {
   name = "smallstep/cli";
-  version = "v0.21.0";
+  version = "0.21.0";
+  flags = "";
 
-  sourceRoot = ".";
+  sourceRoot = "./source";
 
   src = pkgs.fetchFromGitHub {
+    leaveDotGit = true;
     owner = "smallstep";
-    repo = "cli";
-    rev = "ffe7c00a1040722c7606bced81a5a4ecc8bd8fe5";
-    sha256 = "sha256-LfkLvTK71iNUA8EguJuXYOupO4nGX9T9/La7hEwl9kk=";
+    repo = "certifcate";
+    rev = "v$version";
+    sha256 = "sha256-8A63RaNa6/CD0Jlckid3RFvf0gpibFW5YZ36MdYI4ak=";
   };
 
   buildInputs = [
@@ -22,12 +24,12 @@ pkgs.stdenv.mkDerivation {
   ];
 
   buildPhase = ''
-    make bootstrap
-    make build GOFLAGS=""
+    make GOFLAGS=$flags
   '';
 
   installPhase = ''
     mkdir -p $out/bin
-    mv bin/step $out/bin
+    mv bin/step-ca $out/bin
+    setcap CAP_NET_BIND_SERVICE=+eip $out/bin/step-ca
   '';
 }

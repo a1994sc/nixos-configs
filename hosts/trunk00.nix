@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, lib, pkgs, ... }: let
   kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
     ''
@@ -29,7 +25,11 @@ in {
   # over-ride the default k3s-server cmd as trunk00 acts as the cluster starter
   nixpkgs.overlays = [
     (self: super: {
-      k3s = super.callPackage /etc/nixos/pkgs/k3s-arm64.nix {};
+      k3s = super.callPackage /etc/nixos/pkgs/prebuilt/arm64/k3s.nix {};
+    })
+
+    (self: super: {
+      helm = super.callPackage /etc/nixos/pkgs/prebuilt/arm64/helm.nix {};
     })
   ];
 

@@ -12,8 +12,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     kubectl
-    helm
-    cri-tools
+#    cri-tools
   ];
 
   systemd.services.k3s-server = {

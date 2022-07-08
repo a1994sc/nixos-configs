@@ -11,7 +11,7 @@
       /etc/nixos/modules/sops.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
-      /etc/nixos/modules/infnoise.nix
+      /etc/nixos/modules/smallstep/amd64/certificate.nix
     ];
 
   networking.hostName = "jump-host";
@@ -22,15 +22,7 @@
 
   nixpkgs.overlays = [
     (self: super: {
-      small-ca = super.callPackage /etc/nixos/pkgs/smallstep/certificate.nix {};
-    })
-
-    (self: super: {
-      small-cli = super.callPackage /etc/nixos/pkgs/smallstep/cli.nix {};
-    })
-
-    (self: super: {
-      helm = super.callPackage /etc/nixos/pkgs/helm-amd64.nix {};
+      helm = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/helm.nix {};
     })
   ];
 
@@ -41,8 +33,6 @@
     terraform
     ansible
     nix-prefetch
-    small-ca
-    small-cli
   ];
 
   programs.ssh.startAgent = true;

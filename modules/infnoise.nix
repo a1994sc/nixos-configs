@@ -3,7 +3,7 @@
 {
   nixpkgs.overlays = [
     (self: super: {
-      infnoise = super.callPackage /etc/nixos/pkgs/infnoise.nix {};
+      infnoise = super.callPackage /etc/nixos/pkgs/build/infnoise.nix {};
     })
   ];
 

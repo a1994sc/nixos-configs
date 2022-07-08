@@ -3,7 +3,7 @@ pkgs.stdenv.mkDerivation {
   name = "infnoise";
   version = "0.3.2";
 
-  sourceRoot = ".";
+  sourceRoot = "./software";
 
   src = pkgs.fetchurl {
     url = "https://github.com/leetronics/infnoise/archive/refs/tags/0.3.2.tar.gz";
