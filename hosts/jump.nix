@@ -12,6 +12,7 @@
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
       /etc/nixos/modules/smallstep/amd64/certificate.nix
+      /etc/nixos/modules/smallstep/amd64/cli.nix
     ];
 
   networking.hostName = "jump-host";
