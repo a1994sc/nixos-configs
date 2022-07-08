@@ -20,13 +20,28 @@
 
   system.autoUpgrade.dates = "Wed 04:00";
 
+  nixpkgs.overlays = [
+    (self: super: {
+      small-ca = super.callPackage /etc/nixos/pkgs/smallstep/certificate.nix {};
+    })
+
+    (self: super: {
+      small-cli = super.callPackage /etc/nixos/pkgs/smallstep/cli.nix {};
+    })
+  ];
+
   environment.systemPackages = with pkgs; [
     kubectl
     helm
     linode-cli
     terraform
     ansible
+    nix-prefetch
+    small-ca
+    small-cli
   ];
+
+  programs.ssh.startAgent = true;
 
   users.users.jump = {
     isNormalUser = true;

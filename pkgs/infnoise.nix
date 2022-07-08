@@ -1,13 +1,13 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.stdenv.mkDerivation {
   name = "infnoise";
-  version = "0.3.1";
+  version = "0.3.2";
 
   sourceRoot = ".";
 
   src = pkgs.fetchurl {
-    url = "https://github.com/leetronics/infnoise/releases/download/0.3.1/infnoise-0.3.1.tar.gz";
-    sha256 = "07ece276f5415a8a833b5abbd9a22dec416a75e6dba85d5542cbf376c076e44d";
+    url = "https://github.com/leetronics/infnoise/archive/refs/tags/0.3.2.tar.gz";
+    sha256 = "05c35ae52dee000aac3e070b46c9a7a3b2c0fad3ff3e49f430adf613dd3bbaa7";
   };
 
 #  src = pkgs.fetchFromGitHub {
@@ -29,8 +29,6 @@ pkgs.stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bin
-#    cp $src $out/bin/infnoise
-#    chmod +x $out/bin/infnoise
     install -d $out/bin
     install -m 0755 infnoise $out/bin/
   '';
