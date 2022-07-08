@@ -14,8 +14,9 @@ in pkgs.stdenv.mkDerivation {
 
   phases = [ "installPhase" ];
   installPhase = ''
+    tar xf $src
     mkdir -p $out/bin
-    cp $src $out/bin/step
+    cp step_${version}/bin/step $out/bin/step
     chmod +x $out/bin/step
   '';
 }

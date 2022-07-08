@@ -7,7 +7,7 @@ in pkgs.stdenv.mkDerivation {
   name = "${name}";
   version = "${version}";
 
-  src = pkgs.fetchurl {
+  src = pkgs.fetchTarball {
     url = "https://github.com/${name}/releases/download/v${version}/step-ca_linux_${version}_${arch}.tar.gz";
     sha256 = "56e73c0a044e5a2f10ac82b00b39044d06057f1a9a04d62372a85c00ed099eb8";
   };
@@ -15,7 +15,7 @@ in pkgs.stdenv.mkDerivation {
   phases = [ "installPhase" ];
   installPhase = ''
     mkdir -p $out/bin
-    cp $src $out/bin/step-ca
+    cp $src/bin/step-ca $out/bin/step-ca
     chmod +x $out/bin/step-ca
   '';
 }
