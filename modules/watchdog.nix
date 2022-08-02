@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: let
-  kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
+  watchdogConfig = pkgs.writeText "watchdog.conf"
     ''
       watchdog-device = /dev/watchdog
       watchdog-timeout = 15
@@ -26,7 +26,7 @@ in {
       RestartSec = "5s";
       ExecStart = toString [
         "${pkgs.watchdog}/usr/sbin/watchdog"
-        "-c=${kubeletConfig}"
+        "-c=${watchdogConfig}"
       ];
     };
   };
