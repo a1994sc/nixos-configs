@@ -26,15 +26,10 @@ in {
     (self: super: {
       k3s = super.callPackage /etc/nixos/pkgs/prebuilt/arm64/k3s.nix {};
     })
-
-    (self: super: {
-      helm = super.callPackage /etc/nixos/pkgs/prebuilt/arm64/helm.nix {};
-    })
   ];
 
   environment.systemPackages = with pkgs; [
     kubectl
-    helm
     # cri-tools
   ];
 
