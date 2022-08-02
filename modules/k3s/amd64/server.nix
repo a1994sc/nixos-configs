@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./.
+    ../.
     /etc/nixos/modules/k3s/service-server.nix
   ];
 
