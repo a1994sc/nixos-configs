@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    /etc/nixos/modules/sops.nix
+  ];
+  
   security.pki.certificateFiles = [ "/etc/nixos/cert" ];
 
   programs.bash.enableCompletion = true;

@@ -4,10 +4,10 @@
  # This configuration worked on 09-03-2021 nixos-unstable @ commit 102eb68ceec
  # The image used https://hydra.nixos.org/build/134720986
 
-  imports =
-    [
-      "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/936e4649098d6a5e0762058cb7687be1b2d90550.tar.gz" }/raspberry-pi/4"
-    ];
+  imports = [
+    "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/936e4649098d6a5e0762058cb7687be1b2d90550.tar.gz" }/raspberry-pi/4"
+    /etc/nixos/modules/watchdog.nix
+  ];
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
@@ -40,4 +40,8 @@
     "dtparam=poe_fan_temp3=66000"
     "dtparam=watchdog=on"
   ];
+
+  systemd.extraConfig = ''
+    RuntimeWatchdogSec=60s
+  '';
 }
