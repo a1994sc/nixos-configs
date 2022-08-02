@@ -11,8 +11,10 @@
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
 
   nix = {
-    maxJobs = "auto";
-    autoOptimiseStore = true;
+    settings = {
+      max-jobs = "auto";
+      auto-optimise-store = true;
+    };
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";
@@ -26,7 +28,6 @@
       automatic = true;
       dates = [ "@daily" ];
     };
-    settings.auto-optimise-store = true;
   };
 
   # Set your time zone.

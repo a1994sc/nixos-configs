@@ -38,5 +38,6 @@
     "dtparam=poe_fan_temp1=60000"
     "dtparam=poe_fan_temp2=63000"
     "dtparam=poe_fan_temp3=66000"
+    "dtparam=watchdog=on"
   ];
 }

@@ -7,6 +7,7 @@
       /etc/nixos/modules/raspberry-pi.nix
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/sops.nix
+      /etc/nixos/modules/watchdog.nix
     ];
 
   networking.hostName = "leaf00";
