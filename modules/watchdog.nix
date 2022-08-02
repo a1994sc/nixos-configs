@@ -24,11 +24,9 @@ in {
     serviceConfig = {
       Type = "exec";
       RestartSec = "5s";
-      User = "root";
-      Group = "root";
       ExecStart = toString [
         "${pkgs.watchdog}/usr/sbin/watchdog"
-        "-c=${watchdogConfig}"
+        "-c ${watchdogConfig}"
       ];
     };
   };
