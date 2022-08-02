@@ -8,7 +8,7 @@
 in {
   nixpkgs.overlays = [
     (self: super: {
-      watchdog = super.callPackage /etc/nixos/pkgs/built/watchdog.nix {};
+      watchdog = super.callPackage /etc/nixos/pkgs/build/watchdog.nix {};
     })
   ];
 
