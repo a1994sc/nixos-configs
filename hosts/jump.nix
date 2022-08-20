@@ -34,6 +34,7 @@
     ansible
     nix-prefetch
     infnoise
+    fluxcd
   ];
 
   programs.ssh.startAgent = true;
