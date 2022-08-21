@@ -35,6 +35,7 @@
     nix-prefetch
     infnoise
     fluxcd
+    yubikey-manager
   ];
 
   programs.ssh.startAgent = true;
