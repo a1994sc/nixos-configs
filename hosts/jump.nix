@@ -3,8 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, lib, pkgs, ... }:
-
-{
+let
+  rev = "f075361ecbde21535b38e41dfaa28a28f160855c";
+in {
   imports =
     [ 
       /etc/nixos/modules/main-config.nix
@@ -12,6 +13,7 @@
       /etc/nixos/modules/tailscale.nix
       /etc/nixos/modules/smallstep/amd64/certificate.nix
       /etc/nixos/modules/smallstep/amd64/cli.nix
+      "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
     ];
 
   networking.hostName = "jump-host";
@@ -36,6 +38,8 @@
     infnoise
     fluxcd
     yubikey-manager
+    age
+    gnupg
   ];
 
   programs.ssh.startAgent = true;
@@ -48,6 +52,8 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICVflfgY9+i0jlwcHlVvONUIFyDN3ynU0sEF0nv4nFrw phone@adrp.xyz"
     ];
   };
+
+  sops.age.keyFile = "/home/ascii/.config/sops/age/keys.txt";
 
   sops.secrets.ascii = {
     owner = "ascii";

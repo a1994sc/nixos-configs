@@ -13,6 +13,7 @@ in {
       /etc/nixos/modules/k3s/.
       /etc/nixos/modules/raspberry-pi.nix
       /etc/nixos/modules/main-config.nix
+      /etc/nixos/modules/sops.nix
     ];
 
   networking.hostName = "trunk00";
