@@ -76,11 +76,7 @@ in {
 
   systemd.services.tailscale.environment = {
       PORT = "41641"; 
-      FLAGS = toString [
-        "--advertise-routes=10.2.0.0/16"
-        "--advertise-exit-node"
-        "--accept-dns=false"
-        "--accept-routes=false"
-      ];
+#      FLAGS = toString [
+#      ];
     };
 }
