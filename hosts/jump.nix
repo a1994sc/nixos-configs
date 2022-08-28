@@ -4,7 +4,7 @@
 
 { config, lib, pkgs, ... }:
 let
-  rev = "f075361ecbde21535b38e41dfaa28a28f160855c";
+  rev = "d92fba1bfc9f64e4ccb533701ddd8590c0d8c74a";
 in {
   imports =
     [ 
