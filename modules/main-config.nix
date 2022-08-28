@@ -33,7 +33,6 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-
   networking.useDHCP = false;
   networking.interfaces.eth0.useDHCP = true;
 

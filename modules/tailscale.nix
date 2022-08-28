@@ -15,9 +15,6 @@
       ExecStart = "${pkgs.tailscale}/bin/tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/run/tailscale/tailscaled.sock --tun 'tailscale0' --port $PORT $FLAGS";
       ExecStopPost = "${pkgs.tailscale}/bin/tailscaled --cleanup";
     };
-    environment = {
-      PORT="41641"; 
-    };
   };
 
   # if you want exit-node or advertise-routes to work properly

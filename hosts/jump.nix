@@ -11,8 +11,8 @@ in {
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
-      /etc/nixos/modules/smallstep/amd64/certificate.nix
-      /etc/nixos/modules/smallstep/amd64/cli.nix
+#      /etc/nixos/modules/smallstep/amd64/certificate.nix
+#      /etc/nixos/modules/smallstep/amd64/cli.nix
       "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
     ];
 
@@ -73,4 +73,9 @@ in {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
+
+  systemd.services.tailscale.environment = {
+      PORT="41641"; 
+      FLAGS="--advertise-routes=10.2.0.0/16 --advertise-exit-node";
+    };
 }
