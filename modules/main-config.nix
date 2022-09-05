@@ -53,6 +53,7 @@
     wget
     htop
     git
+    home-manager
   ];
 
   system.autoUpgrade = {
