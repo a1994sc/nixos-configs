@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: let
   version = "v1.23";
-  arch = "arm64";
+  arch = "amd64";
   role = "agent";
 in {
   imports = [
