@@ -1,14 +1,16 @@
-{ config, pkgs, lib, ... }:
-
-{
+{ config, pkgs, lib, ... }: let
+  version = "v1.23";
+  arch = "amd64";
+  role = "agent";
+in {
   imports = [
     ../.
-    /etc/nixos/modules/k3s/service-agent.nix
+    "/etc/nixos/modules/k3s/service-${role}.nix"
   ];
 
   nixpkgs.overlays = [
     (self: super: {
-      k3s = super.callPackage /etc/nixos/pkgs/prebuilt/arm64/k3s.nix {};
+      k3s = super.callPackage "/etc/nixos/pkgs/prebuilt/${arch}/k3s/${version}.nix" {};
     })
   ];
 }

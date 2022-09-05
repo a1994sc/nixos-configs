@@ -2,8 +2,8 @@
 pkgs.stdenv.mkDerivation {
   name = "k3s";
   src = pkgs.fetchurl {
-    url = "https://github.com/k3s-io/k3s/releases/download/v1.23.7%2Bk3s1/k3s-arm64";
-    sha256 = "3b8a3ac496244fb621f727cd59fd8228fd2a2c902b14b0fb703bf9089c9dbc11";
+    url = "https://github.com/k3s-io/k3s/releases/download/v1.21.14%2Bk3s1/k3s-arm64";
+    sha256 = "f852b7c71ed639f6ca6a54dd846a2fae656b48b7ee4c49ed23f05be087bae4aa";
   };
   phases = [ "installPhase" ];
   installPhase = ''
