@@ -7,6 +7,8 @@
       shutdownGracePeriod: 30s
       shutdownGracePeriodCriticalPods: 10s
     '';
+  version = "v1.23";
+  arch = "arm64";
 in {
   imports =
     [ 
@@ -25,7 +27,7 @@ in {
   # over-ride the default k3s-server cmd as trunk00 acts as the cluster starter
   nixpkgs.overlays = [
     (self: super: {
-      k3s = super.callPackage /etc/nixos/pkgs/prebuilt/arm64/k3s.nix {};
+      k3s = super.callPackage "/etc/nixos/pkgs/prebuilt/${arch}/k3s/${version}.nix" {};
     })
   ];
 
@@ -75,7 +77,7 @@ in {
         # "--flannel-backend=none"
         # "--disable-network-policy"
         "--kubelet-arg=config=${kubeletConfig}"
-#        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+        # "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
   };
