@@ -40,7 +40,7 @@ in {
     yubikey-manager
     age
     gnupg
-    nixops
+    nixopsUnstable
   ];
 
   programs.ssh.startAgent = true;
