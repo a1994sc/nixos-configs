@@ -10,6 +10,8 @@
     environment.systemPackages = with pkgs; [
       k3s
       lvm2
+      ceph
+      ceph-csi
       # cri-tools
     ];
 
