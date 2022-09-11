@@ -30,6 +30,10 @@
     };
   };
 
+  boot.kernel.sysctl = toString [
+    "fs.inotify.max_user_instances=512"
+  ];
+
   # Set your time zone.
   time.timeZone = "America/New_York";
 
