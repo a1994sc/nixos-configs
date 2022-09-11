@@ -67,7 +67,7 @@
     # };
 
   virtualisation.containerd = {
-    enable = true
+    enable = true;
     settings = {
       version = 2;
       plugins."io.containerd.grpc.v1.cri" = {
