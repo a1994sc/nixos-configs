@@ -54,7 +54,7 @@ in {
 #        "--flannel-backend=none"
 #        "--disable-network-policy"
         "--kubelet-arg=config=${kubeletConfig}"
-#        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
   };

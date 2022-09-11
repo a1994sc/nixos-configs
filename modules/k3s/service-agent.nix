@@ -41,7 +41,7 @@ in {
         "--token-file ${config.sops.secrets.token.path}"
         "--server https://10.2.1.9:6443"
         "--kubelet-arg=config=${kubeletConfig}"
-#        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+        "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
   };
