@@ -54,6 +54,7 @@
     htop
     git
     home-manager
+    python3
   ];
 
   system.autoUpgrade = {
