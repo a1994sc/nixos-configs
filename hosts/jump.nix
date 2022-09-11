@@ -40,8 +40,42 @@ in {
     yubikey-manager
     age
     gnupg
-    nixopsUnstable
   ];
+
+  services.nginx = {
+    enable = true;
+    streamConfig = ''
+      upstream k3s_servers {
+        server 10.2.25.50:6443;
+        server 10.2.25.51:6443;
+        server 10.2.25.52:6443;
+        server 10.2.25.55:6443;
+        server 10.2.25.56:6443;
+      }
+
+      server {
+        listen 6443;
+        proxy_pass k3s_servers;
+      }
+    '';
+    # upstreams = {
+    #   "k3s_servers" = {
+    #     servers = { 
+    #       "10.2.25.50:6443" = {};
+    #       "10.2.25.51:6443" = {};
+    #       "10.2.25.52:6443" = {};
+    #       "10.2.25.55:6443" = {};
+    #       "10.2.25.56:6443" = {};
+    #     };
+    #   };
+    # };
+    # virtualHosts."k3s-proxy" = {
+    #   listen = [{port = 6443; addr="0.0.0.0"; ssl=false;}];
+    #   locations."/" = {
+    #     proxyPass = "k3s_servers";
+    #   };
+    # };
+  };
 
   programs.ssh.startAgent = true;
 
@@ -77,7 +111,5 @@ in {
 
   systemd.services.tailscale.environment = {
       PORT = "41641"; 
-#      FLAGS = toString [
-#      ];
     };
 }

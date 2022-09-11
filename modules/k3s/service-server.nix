@@ -39,8 +39,8 @@ in {
       ExecStartPre = "${pkgs.kmod}/bin/modprobe -a br_netfilter overlay";
       ExecStart = toString [
         "${pkgs.k3s}/bin/k3s server"
-        "--tls-san 10.2.25.99"
-        "--server https://10.2.25.99:6443"
+        "--tls-san 10.2.1.9"
+        "--server https://10.2.1.9:6443"
         "--token-file ${config.sops.secrets.token.path}"
         "--disable traefik,servicelb,coredns,metrics-server"
         "--write-kubeconfig-mode=644"
