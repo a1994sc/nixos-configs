@@ -11,7 +11,7 @@
       k3s
       lvm2
       # ceph
-      ceph-csi
+      # ceph-csi
       cri-tools
       gptfdisk
       parted
