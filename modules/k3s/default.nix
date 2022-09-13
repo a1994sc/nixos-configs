@@ -13,6 +13,8 @@
       # ceph
       ceph-csi
       cri-tools
+      gptfdisk
+      parted
     ];
 
     boot.kernelModules = [
