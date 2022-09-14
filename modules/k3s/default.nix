@@ -10,7 +10,7 @@
     environment.systemPackages = with pkgs; [
       k3s
       lvm2
-      # ceph
+      ceph
       # ceph-csi
       cri-tools
       gptfdisk
