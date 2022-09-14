@@ -17,10 +17,8 @@
       parted
     ];
 
-    system.activationScripts.lvm = ''
-        ln -sfn /run/current-system/sw/bin/vgcreate /bin/vgcreate
-        ln -sfn /run/current-system/sw/bin/pvs /bin/pvs
-        ln -sfn /run/current-system/sw/bin/lvs /bin/lvs
+    system.activationScripts.cluster-fix = ''
+        ln -sfn /run/current-system/sw/bin/* /bin/
       '';
 
     boot.kernelModules = [
