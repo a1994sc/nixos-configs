@@ -66,24 +66,24 @@
         10.2.25.72  leaf12
       '';
 
-    # environment.etc."cni".source = pkgs.buildEnv {
-    #   name = "etc-cni-bin";
-    #   paths = [ pkgs.cni-plugins pkgs.cilium-cli ];
-    #   pathsToLink = [ "/bin" ];
-    # };
+    environment.etc."cni".source = pkgs.buildEnv {
+      name = "etc-cni-bin";
+      paths = [ pkgs.cni-plugins ];
+      pathsToLink = [ "/bin" ];
+    };
 
     virtualisation.containerd = {
       enable = true;
       settings = {
         version = 2;
         plugins."io.containerd.grpc.v1.cri" = {
-#          cni.conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
+          # cni.conf_dir = "/var/lib/rancher/k3s/agent/etc/cni/net.d/";
           cni.conf_dir = "/etc/cni/net.d/";
           # FIXME: upstream
-          cni.bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
-            mkdir -p $out
-            ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
-          ''}";
+          # cni.bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
+          #   mkdir -p $out
+          #   ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
+          # ''}";
         };
       };
     };
