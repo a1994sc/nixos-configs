@@ -74,8 +74,8 @@ in {
         "--kube-controller-arg node-monitor-grace-period=20s"
         "--kubelet-arg node-status-update-frequency=5s"
         "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
-        "--flannel-backend=none"
-        "--disable-network-policy"
+        # "--flannel-backend=none"
+        # "--disable-network-policy"
         "--kubelet-arg=config=${kubeletConfig}"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
