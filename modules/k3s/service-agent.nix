@@ -38,7 +38,7 @@ in {
       ExecStart = toString [
         "${pkgs.k3s}/bin/k3s agent"
         "--token-file ${config.sops.secrets.token.path}"
-        "--server https://10.2.1.9:6443"
+        "--server https://10.2.25.50:6443"
         "--kubelet-arg=config=${kubeletConfig}"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
