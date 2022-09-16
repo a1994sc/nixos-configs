@@ -81,10 +81,10 @@
           # cni.conf_dir = "/etc/cni/net.d/";
           # cni.bin_dir = "/opt/cni/bin";
           # FIXME: upstream
-          # cni.bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
-          #   mkdir -p $out
-          #   ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
-          # ''}";
+          cni.bin_dir = "${pkgs.runCommand "cni-bin-dir" {} ''
+            mkdir -p $out
+            ln -sf ${pkgs.cni-plugins}/bin/* ${pkgs.cni-plugin-flannel}/bin/* $out
+          ''}";
         };
       };
     };
