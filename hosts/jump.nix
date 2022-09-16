@@ -40,6 +40,7 @@ in {
     yubikey-manager
     age
     gnupg
+    cilium-cli
   ];
 
   services.nginx = {
