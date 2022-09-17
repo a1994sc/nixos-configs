@@ -13,6 +13,7 @@
 
   environment.systemPackages = with pkgs; [
     k3s
+    cri-tools
   ];
 
   networking.extraHosts =
