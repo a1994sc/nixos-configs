@@ -25,7 +25,7 @@ in {
   nixpkgs.overlays = [
     (self: super: {
       helm = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/helm.nix {};
-    }),
+    })
     (self: super: {
       istioctl = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/istioctl.nix {};
     })
