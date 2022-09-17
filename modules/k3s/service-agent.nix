@@ -10,10 +10,6 @@
 in {
   sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/agent.yaml;
 
-  # environment.systemPackages = with pkgs; [
-  #   cri-tools
-  # ];
-
   systemd.services.k3s-agent = {
     # Unit
     description = "Lightweight Kubernetes";

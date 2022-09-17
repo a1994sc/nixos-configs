@@ -1,18 +1,10 @@
 { config, pkgs, lib, ... }: let
-  kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
-    ''
-      apiVersion: kubelet.config.k8s.io/v1beta1
-      kind: KubeletConfiguration
 
-      shutdownGracePeriod: 30s
-      shutdownGracePeriodCriticalPods: 10s
-    '';
 in {
   sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/server.yaml;
 
   environment.systemPackages = with pkgs; [
     kubectl
-#    cri-tools
   ];
 
   systemd.services.k3s-server = {
@@ -41,18 +33,10 @@ in {
         "--tls-san 10.2.1.9"
         "--server https://10.2.25.50:6443"
         "--token-file ${config.sops.secrets.token.path}"
-        "--disable traefik,servicelb,coredns,metrics-server"
+        "--disable traefik,servicelb,metrics-server"
         "--write-kubeconfig-mode=644"
-        "--kube-apiserver-arg default-not-ready-toleration-seconds=30"
-        "--kube-apiserver-arg default-unreachable-toleration-seconds=30"
-        "--kube-apiserver-arg feature-gates=GracefulNodeShutdown=true"
-        "--kube-controller-arg node-monitor-period=20s"
-        "--kube-controller-arg node-monitor-grace-period=20s"
-        "--kubelet-arg node-status-update-frequency=5s"
-        "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
         # "--flannel-backend=none"
         # "--disable-network-policy"
-        "--kubelet-arg=config=${kubeletConfig}"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
