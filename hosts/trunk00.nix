@@ -12,7 +12,7 @@
     "--tls-san 10.2.1.9"
     "--cluster-init"
     "--token-file ${config.sops.secrets.token.path}"
-    "--disable traefik,servicelb,metrics-server"
+    "--disable traefik,servicelb,metrics-server,coredns"
     "--write-kubeconfig-mode=644"
     "--kube-apiserver-arg default-not-ready-toleration-seconds=30"
     "--kube-apiserver-arg default-unreachable-toleration-seconds=30"
