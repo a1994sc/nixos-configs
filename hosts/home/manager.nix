@@ -14,6 +14,6 @@
 
   system.activationScripts.home-man = ''
       chown -R ascii:users /etc/nixos/host/home/configs
-      ln /etc/nixos/host/home/configs /home/ascii/.config/nixpkgs/
+      ln /etc/nixos/hosts/home/configs/ /home/ascii/.config/nixpkgs/
     '';
 }
