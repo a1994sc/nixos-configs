@@ -54,7 +54,6 @@
     wget
     htop
     git
-    home-manager
     python3
   ];
 

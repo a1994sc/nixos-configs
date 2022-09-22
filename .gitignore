@@ -1,3 +1,4 @@
 ./configuration.nix
 ./hardware-configuration.nix
 *.log
+./host/home/configs/home.nix

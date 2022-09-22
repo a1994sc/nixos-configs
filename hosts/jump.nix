@@ -14,7 +14,7 @@ in {
 #      /etc/nixos/modules/smallstep/amd64/certificate.nix
 #      /etc/nixos/modules/smallstep/amd64/cli.nix
       "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
-      <home-manager/nixos>
+      /etc/nixos/hosts/home/manager.nix
     ];
 
   networking.hostName = "jump-host";
