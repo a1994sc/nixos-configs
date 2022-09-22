@@ -7,13 +7,14 @@ let
   rev = "d92fba1bfc9f64e4ccb533701ddd8590c0d8c74a";
 in {
   imports =
-    [ 
+    [
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
 #      /etc/nixos/modules/smallstep/amd64/certificate.nix
 #      /etc/nixos/modules/smallstep/amd64/cli.nix
       "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
+      <home-manager/nixos>
     ];
 
   networking.hostName = "jump-host";
@@ -30,6 +31,11 @@ in {
       istioctl = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/istioctl.nix {};
     })
   ];
+
+  home-manager.users.ascii = { pkgs, ... }: {
+    home.packages = [ pkgs.atool pkgs.httpie ];
+    programs.bash.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     kubectl
@@ -97,6 +103,6 @@ in {
   };
 
   systemd.services.tailscale.environment = {
-      PORT = "41641"; 
+      PORT = "41641";
     };
 }
