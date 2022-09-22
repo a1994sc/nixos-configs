@@ -2,7 +2,7 @@
 
 {
   imports = [
-    example.nix
+    /etc/nixos/hosts/home/configs/example.nix
   ];
 
   home.username = "ascii";
