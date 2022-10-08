@@ -31,6 +31,7 @@ in {
       /etc/nixos/modules/raspberry-pi.nix
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/sops.nix
+      /etc/nixos/hosts/home/manager.nix
     ];
 
   networking.hostName = "trunk00";

@@ -8,6 +8,7 @@ in pkgs.stdenv.mkDerivation {
 
   sourceRoot = "";
 
+  # nix-prefetch-url --unpack https://example/com/blah.tar.gz
   src = pkgs.fetchurl {
     url = "https://cytranet.dl.sourceforge.net/project/${name}/${name}/${version}/${name}-${version}.tar.gz";
     sha256 = "b8e7c070e1b72aee2663bdc13b5cc39f76c9232669cfbb1ac0adc7275a3b019d";
