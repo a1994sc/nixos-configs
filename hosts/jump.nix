@@ -75,7 +75,6 @@ in {
   services.udev.extraRules = ''
     ACTION=="add|change", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0010|0110|0111|0114|0116|0401|0403|0405|0407|0410", OWNER="ascii", TAG+="uaccess"
   '';
-  
 
   users.users.jump = {
     isNormalUser = true;
