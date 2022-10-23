@@ -33,7 +33,7 @@ in {
         "--tls-san 10.2.1.9"
         "--server https://10.2.25.50:6443"
         "--token-file ${config.sops.secrets.token.path}"
-        "--disable traefik,servicelb,metrics-server"
+        "--disable traefik,servicelb,metrics-server,coredns"
         "--write-kubeconfig-mode=644"
         # "--flannel-backend=none"
         # "--disable-network-policy"
