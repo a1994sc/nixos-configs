@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }: let
   name = "gitops";
   version = "0.10.0";
-  arch = "amd64";
+  arch = "x86_64";
   sha = "f797d0ed87f3afee4ff1b31350d9c5920e8da11332659f99c3ef7e76a4333fb8";
 in  pkgs.stdenv.mkDerivation {
   name = "${name}";
