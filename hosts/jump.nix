@@ -30,6 +30,9 @@ in {
     (self: super: {
       istioctl = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/istioctl.nix {};
     })
+    (self: super: {
+      gitops = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/gitops.nix {};
+    })
   ];
 
   home-manager.users.ascii = { pkgs, ... }: {
@@ -50,6 +53,7 @@ in {
     yubikey-manager
     age
     gnupg
+    gitops
   ];
 
   services.nginx = {
