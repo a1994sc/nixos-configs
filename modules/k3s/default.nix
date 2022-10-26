@@ -14,6 +14,7 @@
   environment.systemPackages = with pkgs; [
     k3s
     cri-tools
+    openiscsi
   ];
 
   networking.extraHosts =
