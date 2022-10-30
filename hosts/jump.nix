@@ -54,6 +54,7 @@ in {
     age
     gnupg
     gitops
+    cloudflared
   ];
 
   services.nginx = {
