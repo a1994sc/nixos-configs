@@ -12,6 +12,13 @@
 
   nix = {
     settings = {
+      substituters = [
+        "http://cache.10.2.1.9.nip.io"
+        "https://cache.nixos.org/"
+      ];
+      trusted-public-keys = [
+        "cache.10.2.1.9.nip.io:1ygY0YUo7dl51Q4Fp/EoxWk2Pwpkq05T9LaNM/jGPkQ="
+      ];
       max-jobs = "auto";
       auto-optimise-store = true;
     };
