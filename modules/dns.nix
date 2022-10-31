@@ -3,7 +3,7 @@
 {
   nixpkgs.overlays = [
     (self: super: {
-      helm = super.callPackage /etc/nixos/pkgs/build/coredns.nix {};
+      coredns = super.callPackage /etc/nixos/pkgs/build/coredns.nix {};
     })
   ];
 
