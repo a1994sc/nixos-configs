@@ -35,8 +35,15 @@ in {
         "--token-file ${config.sops.secrets.token.path}"
         "--disable traefik,servicelb,metrics-server,coredns"
         "--write-kubeconfig-mode=644"
-        # "--flannel-backend=none"
-        # "--disable-network-policy"
+        "--kube-apiserver-arg default-not-ready-toleration-seconds=30"
+        "--kube-apiserver-arg default-unreachable-toleration-seconds=30"
+        "--kube-apiserver-arg feature-gates=GracefulNodeShutdown=true"
+        "--kube-apiserver-arg feature-gates=GracefulNodeShutdownBasedOnPodPriority=true"
+        "--kube-controller-arg node-monitor-period=20s"
+        "--kube-controller-arg node-monitor-grace-period=20s"
+        "--kubelet-arg node-status-update-frequency=5s"
+        "--kubelet-arg shutdownGracePeriod=30s"
+        "--kubelet-arg shutdownGracePeriodCriticalPods=10s"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
