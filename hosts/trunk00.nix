@@ -13,10 +13,10 @@
     "--kube-controller-arg node-monitor-period=20s"
     "--kube-controller-arg node-monitor-grace-period=20s"
     "--kubelet-arg node-status-update-frequency=5s"
-    "--kubelet-arg shutdownGracePeriod=30s"
     "--kubelet-arg shutdownGracePeriodCriticalPods=10s"
     "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
   ];
+  # "--kubelet-arg shutdownGracePeriod=30s"
 in {
   imports =
     [ 
