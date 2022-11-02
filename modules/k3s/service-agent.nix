@@ -1,5 +1,12 @@
 { config, pkgs, lib, ... }: let
+  kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
+    ''
+      apiVersion: kubelet.config.k8s.io/v1beta1
+      kind: KubeletConfiguration
 
+      shutdownGracePeriod: 30s
+      shutdownGracePeriodCriticalPods: 10s
+    '';
 in {
   sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/agent.yaml;
 
@@ -29,8 +36,7 @@ in {
         "--token-file ${config.sops.secrets.token.path}"
         "--server https://10.2.25.50:6443"
         "--kubelet-arg node-status-update-frequency=5s"
-        "--kubelet-arg shutdownGracePeriod=30s"
-        "--kubelet-arg shutdownGracePeriodCriticalPods=10s"
+        "--kubelet-arg=config=${kubeletConfig}"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
       ];
     };
