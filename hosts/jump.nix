@@ -11,7 +11,7 @@ in {
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
-      /etc/nixos/modules/binary-cache.nix
+#      /etc/nixos/modules/binary-cache.nix
 #      /etc/nixos/modules/smallstep/amd64/certificate.nix
 #      /etc/nixos/modules/smallstep/amd64/cli.nix
       "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"

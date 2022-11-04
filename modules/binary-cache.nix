@@ -20,16 +20,18 @@
   };
 
   services.nginx = {
+    user = "nix-serve";
+    group = "nix-serve";
     # enable = true;
     virtualHosts = {
       "cache.10.2.1.9.nip.io" = {
         serverAliases = [ "binarycache" ];
-        locations."/".extraConfig = ''
-          proxy_pass http://localhost:${toString config.services.nix-serve.port};
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        '';
+        # locations."/".extraConfig = ''
+        #   proxy_pass http://localhost:${toString config.services.nginx.port};
+        #   proxy_set_header Host $host;
+        #   proxy_set_header X-Real-IP $remote_addr;
+        #   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # '';
         locations."~ ^/nix-cache-info".extraConfig = ''
           proxy_store        on;
           proxy_store_access user:rw group:rw all:r;
