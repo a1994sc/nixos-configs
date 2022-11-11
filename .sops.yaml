@@ -1,4 +1,5 @@
 keys:
+  - &allen    71DADA7922B3E08101B3341369C476704F97DBDA
   - &master   age1xqc2h0gazssmk3mchql6epwmkap7prv9nuknzprr9q2pzscprvfs995ukj
   - &jump     age13equrg3yhm9rjp6vu5h4tttfe7flk57xc3zxjldn5k6jxanprc9s6ewg5l
   - &trunk00  age1vvwz4n52040ncrl7u74h9nx0hf4mmwec42p3j8pyel2num3meaesgcvqgu
@@ -37,3 +38,7 @@ creation_rules:
       - age:
           - *master
           - *jump
+  - path_regex: archive/[^/]+.$
+    key_groups:
+      - pgp:
+        - *allen
