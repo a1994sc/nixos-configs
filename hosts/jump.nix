@@ -64,11 +64,9 @@ in {
     enable = true;
     streamConfig = ''
       upstream k3s_servers {
-        server 10.2.25.50:6443;
-        server 10.2.25.51:6443;
-        server 10.2.25.52:6443;
-        server 10.2.25.55:6443;
-        server 10.2.25.56:6443;
+        server 10.2.25.100:6443;
+        server 10.2.25.101:6443;
+        server 10.2.25.102:6443;
       }
 
       server {

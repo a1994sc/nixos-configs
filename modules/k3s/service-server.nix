@@ -31,6 +31,21 @@ in {
         "--kubelet-arg node-status-update-frequency=5s"
         "--kubelet-arg=config=${kubeletConfig}"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+        # CIS Hardening
+        "--protect-kernel-defaults=true"
+        "--secrets-encryption=true"
+        "--kube-apiserver-arg='audit-log-path=/var/lib/rancher/k3s/server/logs/audit.log'"
+        "--kube-apiserver-arg='audit-policy-file=/var/lib/rancher/k3s/server/audit.yaml'"
+        "--kube-apiserver-arg='audit-log-maxage=30'"
+        "--kube-apiserver-arg='audit-log-maxbackup=10'"
+        "--kube-apiserver-arg='audit-log-maxsize=100'"
+        "--kube-apiserver-arg='request-timeout=300s'"
+        "--kube-apiserver-arg='service-account-lookup=true'"
+        "--kube-apiserver-arg='enable-admission-plugins=NodeRestriction,PodSecurityPolicy,NamespaceLifecycle,ServiceAccount'"
+        "--kube-controller-manager-arg='terminated-pod-gc-threshold=10'"
+        "--kube-controller-manager-arg='use-service-account-credentials=true'"
+        "--kubelet-arg='streaming-connection-idle-timeout=5m'"
+        "--kubelet-arg='make-iptables-util-chains=true'"
       ];
   };
 

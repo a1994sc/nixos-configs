@@ -13,7 +13,7 @@
   nix = {
     settings = {
       substituters = [
-        "http://cache.10.2.1.9.nip.io"
+        # "http://cache.10.2.1.9.nip.io"
         "https://cache.nixos.org/"
       ];
       trusted-public-keys = [

@@ -38,6 +38,9 @@ in {
         "--kubelet-arg node-status-update-frequency=5s"
         "--kubelet-arg=config=${kubeletConfig}"
         "--container-runtime-endpoint unix:///run/containerd/containerd.sock"
+        # CIS Hardening
+        "--kubelet-arg='streaming-connection-idle-timeout=5m'"
+        "--kubelet-arg='make-iptables-util-chains=true'"
       ];
     };
   };
