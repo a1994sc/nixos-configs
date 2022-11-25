@@ -12,7 +12,7 @@
       sopsFile = /etc/nixos/secrets/powerdnssalt.yaml;
       mode = "0600";
     };
-  }
+  };
 
   services.powerdns-admin = {
     enable = true;
