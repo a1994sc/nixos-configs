@@ -5,8 +5,8 @@
 
   programs.bash.enableCompletion = true;
 
-  networking.domain   = "adrp.xyz";
-  networking.search   = [ "adrp.xyz" ];
+  networking.domain = "adrp.xyz";
+  networking.search = [ "adrp.xyz" ];
 
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
 
@@ -63,6 +63,12 @@
     git
     python3
   ];
+
+  environment.variables = rec {
+    PATH = [ 
+      "/run/current-system/sw/bin/"
+    ];
+  };
 
   system.autoUpgrade = {
     enable      = true;
