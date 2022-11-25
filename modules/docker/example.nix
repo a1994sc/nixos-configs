@@ -1,15 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
-  sops.secrets = {
-    pihole = {
-      sopsFile = /etc/nixos/secrets/pihole.yaml;
-      mode = "0644";
-    };
-  };
+  # sops.example = {
+  #   example = {
+  #     sopsFile = /etc/nixos/secrets/example.yaml;
+  #     mode = "0644";
+  #   };
+  # };
 
-  systemd.services."docker-compose@pihole" = {
-    enable = true;
+  systemd.services."docker-compose@" = {
+    enabled = false;
     unitConfig = {
       Description = "%i service with docker compose";
       PartOf = "docker.service";
