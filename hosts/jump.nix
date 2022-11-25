@@ -4,16 +4,13 @@
 
 { config, lib, pkgs, ... }:
 let
-  rev = "d92fba1bfc9f64e4ccb533701ddd8590c0d8c74a";
+  rev = "f72e050c3ef148b1131a0d2df55385c045e4166b";
 in {
   imports =
     [
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
-#      /etc/nixos/modules/binary-cache.nix
-#      /etc/nixos/modules/smallstep/amd64/certificate.nix
-#      /etc/nixos/modules/smallstep/amd64/cli.nix
       "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
       /etc/nixos/hosts/home/manager.nix
     ];
@@ -78,9 +75,9 @@ in {
 
   programs.ssh.startAgent = true;
 
-  services.udev.extraRules = ''
-    ACTION=="add|change", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0010|0110|0111|0114|0116|0401|0403|0405|0407|0410", OWNER="ascii", TAG+="uaccess"
-  '';
+  # services.udev.extraRules = ''
+  #   ACTION=="add|change", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0010|0110|0111|0114|0116|0401|0403|0405|0407|0410", OWNER="ascii", TAG+="uaccess"
+  # '';
 
   users.users.jump = {
     isNormalUser = true;
@@ -100,7 +97,7 @@ in {
     mode = "0600";
   };
 
-   sops.secrets.vault = {
+  sops.secrets.vault = {
     owner = "ascii";
     path = "/home/ascii/.ssh/vault";
     sopsFile = /etc/nixos/secrets/vault.yaml;
@@ -120,6 +117,6 @@ in {
   };
 
   systemd.services.tailscale.environment = {
-      PORT = "41641";
-    };
+    PORT = "41641";
+  };
 }
