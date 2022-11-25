@@ -3,3 +3,4 @@
 *.log
 *.decrypted*
 ./host/home/configs/home.nix
+compose/*/*/
