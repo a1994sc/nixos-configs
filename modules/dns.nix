@@ -1,29 +1,27 @@
 { config, pkgs, lib, ... }:
 
 {
-  nixpkgs.overlays = [
-    (self: super: {
-      coredns = super.callPackage /etc/nixos/pkgs/build/coredns.nix {};
-    })
-  ];
+  services.powerdns.enable = true;
 
-  services.coredns.enable = true;
+  sops.secrets = {
+    powerdns = {
+      sopsFile = /etc/nixos/secrets/powerdns.yaml;
+      mode = "0600";
+    };
+    powerdnssalt = {
+      sopsFile = /etc/nixos/secrets/powerdnssalt.yaml;
+      mode = "0600";
+    };
+  }
 
-  services.coredns.config =
-  ''
-    . {
-      # Cloudflare and Google
-      unbound
-      forward . 1.1.1.1 1.0.0.1 8.8.8.8 8.8.4.4
-      cache
-    }
-
-    local {
-      template IN A  {
-          answer "{{ .Name }} 0 IN A 127.0.0.1"
-      }
-    }
-  '';
+  services.powerdns-admin = {
+    enable = true;
+    saltFile = "/run/secrets/powerdnssalt";
+    secretKeyFile = "/run/secrets/powerdns";
+    config = ''
+      PORT = 9191
+    '';
+  };
 
   networking.networkmanager.insertNameservers = [ "127.0.0.1" ];
 }
