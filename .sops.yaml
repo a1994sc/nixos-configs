@@ -33,6 +33,10 @@ creation_rules:
           - *leaf10
           - *leaf11
           - *leaf12
+  - path_regex: modules/docker/secrets/seedling/pihole.yaml
+    key_groups:
+      - age:
+          - *master
   - path_regex: secrets/[^/]+.$
     key_groups:
       - age:

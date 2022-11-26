@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  pihole:
+    container_name: pihole
+    hostname: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"
+    environment:
+      TZ: 'America/New_York'
+      WEBPASSWORD_FILE: "/run/secrets/pihole"
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './resolv.conf:/etc/resolv.conf'
+      - '/run/secrets/pihole:/run/secrets/pihole'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+  pihole-sync-sender:
+    image: shirom/pihole-sync:latest
+    container_name: pihole-sync-sender
+    volumes:
+        - /mnt/ext/piholesync/root:/root
+        - /mnt/ext/pihole/etc-pihole:/mnt/etc-pihole:ro
+        - /mnt/ext/pihole/etc-dnsmasq.d:/mnt/etc-dnsmasq.d:ro
+    environment:
+        - "NODE=sender"
+        - "REM_HOST=(IP address of remote Pi)"
+        - "REM_SSH_PORT=22222"
