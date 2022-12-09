@@ -26,7 +26,7 @@ services:
     volumes:
         - /mnt/docker/piholesync/root:/root
         - /mnt/docker/pihole:/mnt/etc-pihole:ro
-        - /run/secrets/sync:/root/.ssh/id_ed25519
+        - /run/secrets/sync:/root/.ssh/id_ed25519:ro
     environment:
         - "NODE=sender"
         - "REM_HOST=10.2.1.6"

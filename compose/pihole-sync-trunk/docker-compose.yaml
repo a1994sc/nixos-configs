@@ -25,7 +25,7 @@ services:
     container_name: pihole-sync-receiver
     volumes:
         - /mnt/docker/piholesync/root:/root
-        - /mnt/docker/piholesync/etc-ssh:/etc/ssh:ro
+        - /mnt/docker/piholesync/etc-ssh:/etc/ssh
         - /mnt/docker/pihole:/mnt/etc-pihole:ro
         - /run/secrets/sync-pub:/root/.ssh/authorized_keys
     environment:
