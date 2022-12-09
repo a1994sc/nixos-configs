@@ -6,6 +6,10 @@
       sopsFile = /etc/nixos/modules/compose/secrets/seedling/pihole.yaml;
       mode = "0644";
     };
+    sync-pub = {
+      sopsFile = /etc/nixos/modules/compose/secrets/seedling/pihole.yaml;
+      mode = "0644";
+    };
   };
 
   systemd.services."docker-compose@pihole-sync-trunk" = {

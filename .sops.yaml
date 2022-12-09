@@ -35,7 +35,7 @@ creation_rules:
           - *leaf10
           - *leaf11
           - *leaf12
-  - path_regex: modules/docker/secrets/seedling/[^/]+.$
+  - path_regex: modules/compose/secrets/seedling/[^/]+.$
     key_groups:
       - age:
           - *master
