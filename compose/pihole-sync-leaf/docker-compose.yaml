@@ -13,9 +13,9 @@ services:
       TZ: 'America/New_York'
       WEBPASSWORD_FILE: "/run/secrets/pihole"
     volumes:
-      - './etc-pihole:/etc/pihole'
-      - './resolv.conf:/etc/resolv.conf'
-      - '/run/secrets/pihole:/run/secrets/pihole'
+      - '/mnt/docker/etc-pihole:/etc/pihole'
+      - './resolv.conf:/etc/resolv.conf:ro'
+      - '/run/secrets/pihole:/run/secrets/pihole:ro'
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
@@ -24,10 +24,9 @@ services:
     image: shirom/pihole-sync:latest
     container_name: pihole-sync-sender
     volumes:
-        - /mnt/ext/piholesync/root:/root
-        - /mnt/ext/pihole/etc-pihole:/mnt/etc-pihole:ro
-        - /mnt/ext/pihole/etc-dnsmasq.d:/mnt/etc-dnsmasq.d:ro
+        - /mnt/docker/piholesync/root:/root
+        - /mnt/docker/pihole:/mnt/etc-pihole:ro
     environment:
         - "NODE=sender"
-        - "REM_HOST=(IP address of remote Pi)"
+        - "REM_HOST=10.2.1.6"
         - "REM_SSH_PORT=22222"
