@@ -17,9 +17,9 @@
 
   system.autoUpgrade.dates = "Fri 04:00";
 
-  networking.interfaces.eth0.ipv4.addresses = [ {
-    address = "10.2.1.7";
-    prefixLength = 24;
-  } ];
+  # networking.interfaces.eth0.ipv4.addresses = [ {
+  #   address = "10.2.1.7";
+  #   prefixLength = 24;
+  # } ];
 
 }
