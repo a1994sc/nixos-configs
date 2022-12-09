@@ -13,6 +13,8 @@ keys:
   - &leaf10   age19a5e0dnje6r974q7mwnl56r8dwe7fzgvczdqdatqvfntkmge0szq75znnz
   - &leaf11   age1ft9jmmhqmf8032sle0wj9du63x2hwgm8c2z6ufa2v56gmem70qqsglwz29
   - &leaf12   age1uc58qu5yc0kmzkvswd6nn7mjnqnhnspss33prqgjpz0jkfv5g9ksk5dmnf
+  - &seed00   age1gw06ws8h6gc8y309kwd36y7xjtdeyuuremy69rstzxj3pmegna4qvd6n3a
+  - &seed01   age1hypfg9mncd8gmjcfafmklru74ft3zh465ujek7csyrfxcvh3e3tskk2zyj
 creation_rules:
   - path_regex: modules/k3s/secrets/server.yaml
     key_groups:
@@ -33,10 +35,12 @@ creation_rules:
           - *leaf10
           - *leaf11
           - *leaf12
-  - path_regex: modules/docker/secrets/seedling/pihole.yaml
+  - path_regex: modules/docker/secrets/seedling/[^/]+.$
     key_groups:
       - age:
           - *master
+          - *seed00
+          - *seed01
   - path_regex: secrets/[^/]+.$
     key_groups:
       - age:

@@ -14,7 +14,7 @@ services:
       WEBPASSWORD_FILE: "/run/secrets/pihole"
     volumes:
       - '/mnt/docker/etc-pihole:/etc/pihole'
-      - './resolv.conf:/etc/resolv.conf:ro'
+      - '../pihole/resolv.conf:/etc/resolv.conf:ro'
       - '/run/secrets/pihole:/run/secrets/pihole:ro'
     cap_add:
       - NET_ADMIN

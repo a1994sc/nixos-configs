@@ -3,7 +3,7 @@
 {
   sops.secrets = {
     pihole = {
-      sopsFile = /etc/nixos/modules/docker/secrets/seedling/pihole.yaml;
+      sopsFile = /etc/nixos/modules/compose/secrets/seedling/pihole.yaml;
       mode = "0644";
     };
   };

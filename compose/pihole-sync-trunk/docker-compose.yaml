@@ -14,7 +14,7 @@ services:
       WEBPASSWORD_FILE: "/run/secrets/pihole"
     volumes:
       - '/mnt/docker/pihole:/etc/pihole'
-      - './resolv.conf:/etc/resolv.conf:ro'
+      - '../pihole/resolv.conf:/etc/resolv.conf:ro'
       - '/run/secrets/pihole:/run/secrets/pihole:ro'
     cap_add:
       - NET_ADMIN
@@ -25,7 +25,7 @@ services:
     container_name: pihole-sync-receiver
     volumes:
         - /mnt/docker/piholesync/root:/root
-        - /mnt/docker/piholesync/etc-ssh:/etc/ssh
+        - /mnt/docker/piholesync/etc-ssh:/etc/ssh:ro
         - /mnt/docker/pihole:/mnt/etc-pihole:ro
     environment:
         - "NODE=receiver"
