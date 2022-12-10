@@ -13,7 +13,7 @@ services:
       TZ: 'America/New_York'
       WEBPASSWORD_FILE: "/run/secrets/pihole"
     volumes:
-      - '/mnt/docker/etc-pihole:/etc/pihole'
+      - '/mnt/docker/pihole/etc-pihole:/etc/pihole'
       - '../pihole/resolv.conf:/etc/resolv.conf:ro'
       - '/run/secrets/pihole:/run/secrets/pihole:ro'
     cap_add:
@@ -25,7 +25,8 @@ services:
     container_name: pihole-sync-sender
     volumes:
         - /mnt/docker/piholesync/root:/root
-        - /mnt/docker/pihole:/mnt/etc-pihole:ro
+        - /mnt/docker/pihole/etc-pihole:/mnt/etc-pihole:ro
+        - /mnt/docker/pihole/etc-dnsmasq.d:/mnt/etc-dnsmasq.d:ro
         - /run/secrets/id_ed25519:/root/.ssh/id_ed25519:ro
         - /run/secrets/id_ed25519.pub:/root/.ssh/id_ed25519.pub:ro
     environment:
