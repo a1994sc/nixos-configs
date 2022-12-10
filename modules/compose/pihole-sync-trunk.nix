@@ -9,6 +9,7 @@
     "id_ed25519.pub" = {
       sopsFile = /etc/nixos/modules/compose/secrets/seedling/pihole.yaml;
       mode = "0644";
+      key = "sync-pub";
     };
   };
 
