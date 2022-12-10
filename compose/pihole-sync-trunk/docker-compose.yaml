@@ -27,7 +27,7 @@ services:
         - /mnt/docker/piholesync/root:/root
         - /mnt/docker/piholesync/etc-ssh:/etc/ssh
         - /mnt/docker/pihole:/mnt/etc-pihole:ro
-        - /run/secrets/sync-pub:/root/.ssh/authorized_keys
+        - /run/secrets/id_ed25519.pub:/root/.ssh/id_ed25519.pub:ro
     environment:
         - "NODE=receiver"
     ports:
