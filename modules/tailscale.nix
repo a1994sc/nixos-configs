@@ -4,24 +4,13 @@
   # make the tailscale command usable to users
   environment.systemPackages = [ pkgs.tailscale ];
 
-  systemd.services.tailscale = {
-    description = "Tailsscale Service";
-    documentation = [ "https://tailscale.com/kb/" ];
-    wants = [ "network-pre.target" ];
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-pre.target" "NetworkManager.service" "systemd-resolved.service" ];
-    serviceConfig = {
-      ExecStartPre = "${pkgs.tailscale}/bin/tailscaled --cleanup";
-      ExecStart = "${pkgs.tailscale}/bin/tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/run/tailscale/tailscaled.sock --tun 'tailscale0' --port $PORT $FLAGS";
-      ExecStopPost = "${pkgs.tailscale}/bin/tailscaled --cleanup";
-    };
-  };
+  services.tailscale.enable = true;
 
   # if you want exit-node or advertise-routes to work properly
-  # boot.kernel.sysctl = toString [
-  #   "net.ipv4.ip_forward = 1"
-  #   "net.ipv6.conf.all.forwarding = 1"
-  # ];
+  # boot.kernel.sysctl = {
+  #   "net.ipv4.ip_forward" = 1;
+  #   "net.ipv6.conf.all.forwarding" = 1;
+  # };
 
   # added as a template to add new nodes
   # systemd.services.tailscale-autoconnect = {
