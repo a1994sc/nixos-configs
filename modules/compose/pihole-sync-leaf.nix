@@ -6,9 +6,15 @@
       sopsFile = /etc/nixos/modules/compose/secrets/seedling/pihole.yaml;
       mode = "0644";
     };
-    sync = {
+    "id_ed25519" = {
       sopsFile = /etc/nixos/modules/compose/secrets/seedling/pihole.yaml;
-      mode = "0700";
+      mode = "0600";
+      key = "sync";
+    };
+    "id_ed25519.pub" = {
+      sopsFile = /etc/nixos/modules/compose/secrets/seedling/pihole.yaml;
+      mode = "0644";
+      key = "sync-pub";
     };
   };
 
