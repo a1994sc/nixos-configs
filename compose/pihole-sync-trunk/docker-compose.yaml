@@ -32,3 +32,4 @@ services:
         - "NODE=receiver"
     ports:
         - 22222:22
+    restart: unless-stopped

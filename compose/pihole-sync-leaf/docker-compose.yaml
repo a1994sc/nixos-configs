@@ -32,3 +32,4 @@ services:
         - "NODE=sender"
         - "REM_HOST=10.2.1.6"
         - "REM_SSH_PORT=22222"
+    restart: unless-stopped
