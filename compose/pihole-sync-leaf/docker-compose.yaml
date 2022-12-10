@@ -20,17 +20,16 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 
-  pihole-sync-sender:
+  pihole-sync-receiver:
     image: shirom/pihole-sync:latest
-    container_name: pihole-sync-sender
+    container_name: pihole-sync-receiver
     volumes:
         - /mnt/docker/piholesync/root:/root
-        - /mnt/docker/pihole/etc-pihole:/mnt/etc-pihole:ro
-        - /mnt/docker/pihole/etc-dnsmasq.d:/mnt/etc-dnsmasq.d:ro
-        - /run/secrets/id_ed25519:/root/.ssh/id_ed25519:ro
-        - /run/secrets/id_ed25519.pub:/root/.ssh/id_ed25519.pub:ro
+        - /mnt/docker/piholesync/etc-ssh:/etc/ssh
+        - /mnt/docker/pihole/etc-pihole:/mnt/etc-pihole
+        - /run/secrets/id_ed25519.pub:/root/.ssh/authorized_keys:ro
     environment:
-        - "NODE=sender"
-        - "REM_HOST=10.2.1.6"
-        - "REM_SSH_PORT=22222"
+        - "NODE=receiver"
+    ports:
+        - 22222:22
     restart: unless-stopped
