@@ -31,7 +31,7 @@ services:
         - /run/secrets/id_ed25519.pub:/root/.ssh/id_ed25519.pub:ro
     environment:
         - "NODE=sender"
-        - "REM_HOST=10.2.1.6"
+        - "REM_HOST=10.2.1.7"
         - "REM_SSH_PORT=22222"
     restart: unless-stopped
 
