@@ -21,18 +21,6 @@ in {
 
   system.autoUpgrade.dates = "Wed 04:00";
 
-  nixpkgs.overlays = [
-    (self: super: {
-      helm = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/helm.nix {};
-    })
-    (self: super: {
-      istioctl = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/istioctl.nix {};
-    })
-    (self: super: {
-      gitops = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/gitops.nix {};
-    })
-  ];
-
   boot.cleanTmpDir = true;
 
   home-manager.users.ascii = { pkgs, ... }: {
@@ -43,18 +31,15 @@ in {
   environment.systemPackages = with pkgs; [
     kubectl
     kubernetes-helm
-    istioctl
-    linode-cli
+    # istioctl
     terraform
     ansible
     nix-prefetch
-    infnoise
-    fluxcd
-    yubikey-manager
-    age
-    gnupg
-    gitops
-    cloudflared
+    # fluxcd
+    # age
+    # gnupg
+    # gitops
+    # cloudflared
   ];
 
   services.nginx = {
@@ -74,10 +59,6 @@ in {
   };
 
   programs.ssh.startAgent = true;
-
-  # services.udev.extraRules = ''
-  #   ACTION=="add|change", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0010|0110|0111|0114|0116|0401|0403|0405|0407|0410", OWNER="ascii", TAG+="uaccess"
-  # '';
 
   users.users.jump = {
     isNormalUser = true;
