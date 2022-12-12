@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      /etc/nixos/modules/k3s/hosts/<>.nix
+      # /etc/nixos/hosts/<>.nix
+      # ./hosts/<>.nix
     ];
 }

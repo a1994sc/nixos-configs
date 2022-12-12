@@ -58,7 +58,7 @@ in {
   ];
 
   services.nginx = {
-    enable = true;
+    enable = false;
     streamConfig = ''
       upstream k3s_servers {
         server 10.2.25.100:6443;
@@ -111,12 +111,13 @@ in {
     mode = "0600";
   };
 
+  networking.interfaces.eth0.ipv4.addresses = [ {
+    address = "10.2.1.9";
+    prefixLength = 24;
+  } ];
+
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
-  };
-
-  systemd.services.tailscale.environment = {
-    PORT = "41641";
   };
 }

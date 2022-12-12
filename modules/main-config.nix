@@ -76,6 +76,7 @@
   system.autoUpgrade = {
     enable      = true;
     allowReboot = true;
+    channel = https://nixos.org/channels/nixos-22.11;
   };
 
   services.openssh = {
