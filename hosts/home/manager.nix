@@ -12,6 +12,8 @@
     home-manager
   ];
 
+  home-manager.users.ascii.home.stateVersion = "22.11";
+
   system.activationScripts.home-man = ''
     chown -R ascii:users /etc/nixos/hosts/home/configs/
   '';
