@@ -5,20 +5,24 @@
 
   programs.bash.enableCompletion = true;
 
-  networking.domain = "adrp.xyz";
-  networking.search = [ "adrp.xyz" ];
+  networking = {
+    domain = "adrp.xyz";
+    search = [ "adrp.xyz" ];
 
-  networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
+    wireless.enable = false;
+    useDHCP = false;
+    interfaces.eth0.useDHCP = true;
+    firewall.enable = false;
+  };
+  
+  security.acme.defaults = {
+    email = "${config.networking.hostName}@${config.networking.domain}";
+    server = "https://10.2.1.9:443/acme/acme/directory";
+    validMinDays = 2;
+  };
 
   nix = {
     settings = {
-      substituters = [
-        # "http://cache.10.2.1.9.nip.io"
-        "https://cache.nixos.org/"
-      ];
-      # trusted-public-keys = [
-      #   "cache.10.2.1.9.nip.io:1ygY0YUo7dl51Q4Fp/EoxWk2Pwpkq05T9LaNM/jGPkQ="
-      # ];
       max-jobs = "auto";
       auto-optimise-store = true;
     };
@@ -40,9 +44,6 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  networking.useDHCP = false;
-  networking.interfaces.eth0.useDHCP = true;
-
   services.xserver.enable = false;
 
   users.users.ascii = {
@@ -57,7 +58,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    vim
     wget
     htop
     git
@@ -85,17 +85,5 @@
     permitRootLogin = "no";
   };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05";
 }

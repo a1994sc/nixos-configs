@@ -26,8 +26,8 @@ in {
     address = "0.0.0.0";
     settings = {
       dnsNames = [ "10.2.1.9" ];
-      root = "/etc/nixos/certs/root_ca.crt";
-      crt = "/etc/nixos/certs/intermediate_ca.crt";
+      root = "/etc/nixos/certs/derpy.crt";
+      crt = "/etc/nixos/certs/derpy-jump.crt";
       key = "${step-path}/ca.key";
       db = {
         type = "badgerV2";
@@ -36,8 +36,8 @@ in {
       authority = {
         claims = {
           minTLSCertDuration = "5m";
-          maxTLSCertDuration = "168h";
-          defaultTLSCertDuration = "192h";
+          defaultTLSCertDuration = "168h";
+          maxTLSCertDuration = "192h";
         };
         provisioners = [{
           type = "ACME";
