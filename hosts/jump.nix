@@ -11,6 +11,7 @@ in {
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
+      /etc/nixos/modules/step-ca.nix
       "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
       /etc/nixos/hosts/home/manager.nix
     ];
