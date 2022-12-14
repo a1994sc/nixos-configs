@@ -1,7 +1,11 @@
 { config, pkgs, lib, ... }:
 
-{  
-  security.pki.certificateFiles = [ "/etc/nixos/cert" ];
+{
+  security.pki.certificateFiles = [
+    "/etc/nixos/certs/derpy.crt"
+    "/etc/nixos/certs/derpy-int.crt"
+    "/etc/nixos/certs/derpy-jump.crt"
+    ];
 
   programs.bash.enableCompletion = true;
 
@@ -14,10 +18,11 @@
     interfaces.eth0.useDHCP = true;
     firewall.enable = false;
   };
-  
+
+  security.acme.acceptTerms = true;
   security.acme.defaults = {
     email = "${config.networking.hostName}@${config.networking.domain}";
-    server = "https://10.2.1.9:443/acme/acme/directory";
+    server = "https://10.2.1.9/acme/acme/directory";
     validMinDays = 2;
   };
 
