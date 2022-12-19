@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }: let
-  compose = "pihole-sync-leaf";
+  piholeResolv = pkgs.writeText "resolv.conf"
+    ''
+      nameserver 127.0.0.1
+    '';
 in {
   sops.secrets = {
     pihole = {
