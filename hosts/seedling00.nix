@@ -28,25 +28,39 @@
     "net.ipv6.conf.all.forwarding" = 1;
   };
 
-  security.acme.certs."10.2.1.6" = {
-    domain = "10.2.1.6";
-    reloadServices = [
-      "config.services.nginx"
-    ];
-  };
+  # security.acme.certs."10.2.1.6" = {
+  #   domain = "10.2.1.6";
+  #   # listenHTTP = ":8000";
+  #   reloadServices = [
+  #     "config.services.nginx"
+  #   ];
+  # };
 
-  services.nginx = {
-    enable = true;
-    virtualHosts."10.2.1.6" = {
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8080";
-        proxyWebsockets = true; # needed if you need to use WebSocket
-        extraConfig =
-          "proxy_ssl_server_name on;" +
-          "proxy_pass_header Authorization;";
-      };
-    };
-  };
+  # services.nginx = {
+  #   enable = true;
+  #   virtualHosts."10.2.1.6" = {
+  #     enableACME = true;
+  #     locations = {
+  #       "/" = {
+  #         proxyPass = "http://127.0.0.1:8080";
+  #         proxyWebsockets = true; # needed if you need to use WebSocket
+  #         extraConfig =
+  #           "proxy_ssl_server_name on;" +
+  #           "proxy_pass_header Authorization;";
+  #       };
+  #       "/.well-known/acme-challenge" = {
+  #         proxyPass = "http://127.0.0.1:8000";
+  #       };
+  #     };
+  #     listen = [
+  #       {
+  #         port = 443;
+  #         ssl = true;
+  #       }
+  #       {
+  #         port = 80;
+  #       }
+  #     ];
+  #   };
+  # };
 }

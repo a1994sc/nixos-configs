@@ -1,11 +1,22 @@
 { config, pkgs, lib, ... }:
 
 {
-  security.pki.certificateFiles = [
-    "/etc/nixos/certs/derpy.crt"
-    "/etc/nixos/certs/derpy-int.crt"
-    "/etc/nixos/certs/derpy-jump.crt"
-    ];
+  security.pki.certificates = [
+    ''
+    Derpy CA
+    =========
+    -----BEGIN CERTIFICATE-----
+    MIIBdDCCARqgAwIBAgIRANkYt8S37DW7KItbxVZr9OUwCgYIKoZIzj0EAwIwGDEW
+    MBQGA1UEAxMNRGVycHkgUm9vdCBDQTAeFw0yMDEyMzEwMDI1NTNaFw0zMDEyMzEw
+    MDI1NTNaMBgxFjAUBgNVBAMTDURlcnB5IFJvb3QgQ0EwWTATBgcqhkjOPQIBBggq
+    hkjOPQMBBwNCAATOFoME0It/e323PaeOgrrQZGUGbz3AovjJBBDLAkwld057duoq
+    2ppzrcNQYm3/KfFJrGZUbel0PHpIqh4ufFJWo0UwQzAOBgNVHQ8BAf8EBAMCAQYw
+    EgYDVR0TAQH/BAgwBgEB/wIBATAdBgNVHQ4EFgQUSCs2bRDtMPz4sfHi3sUfJLw5
+    nVgwCgYIKoZIzj0EAwIDSAAwRQIhALmYLFGo9FUAGP6wY8vj1Q5wRXW6n6xV/S6T
+    RG/LtMsYAiBwzyJT5Ht+D/KnxHCqhDTxb/kQQL41IyEcswrIdDF4wA==
+    -----END CERTIFICATE-----
+    ''
+  ];
 
   programs.bash.enableCompletion = true;
 

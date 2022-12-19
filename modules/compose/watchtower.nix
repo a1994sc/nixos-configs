@@ -1,19 +1,21 @@
-{ config, pkgs, lib, ... }:
-
-{
-  systemd.services."docker-compose@watchtower" = {
-    enable = true;
-    unitConfig = {
-      Description = "%i service with docker compose";
-      PartOf = "docker.service";
-      After = "docker.service";
-    };
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      WorkingDirectory = "/etc/nixos/compose/%i";
-      ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d --remove-orphans";
-      ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+{ config, pkgs, lib, ... }: let
+  compose = "watchtower";
+in {
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers = {
+      "watchtower" = {
+        image = "containrrr/watchtower";
+        environment = {
+          WATCHTOWER_CLEANUP = "true";
+          WATCHTOWER_INCLUDE_RESTARTING = "true";
+        };
+        volumes = [
+          "/var/run/docker.sock:/var/run/docker.sock"
+          "/etc/timezone:/etc/timezone:ro"
+        ];
+        autoStart = true;
+      };
     };
   };
 }
