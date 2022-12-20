@@ -55,9 +55,9 @@ in {
           "/run/secrets/id_ed25519.pub:/root/.ssh/authorized_keys:ro"
         ];
         autoStart = true;
-        extraOptions = [
-          "--restart always"
-        ];
+        # extraOptions = [
+        #   "--restart always"
+        # ];
         dependsOn = [
           "pihole"
         ];
