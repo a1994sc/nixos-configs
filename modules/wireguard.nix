@@ -7,7 +7,7 @@
 
   sops.secrets = {
     serverKey = {
-      sopsFile = /etc/nixos/secrets/step-ca.yaml;
+      sopsFile = /etc/nixos/secrets/wireguard.yaml;
       mode = "0600";
     };
     clientOnePreshare = {
