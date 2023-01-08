@@ -31,7 +31,7 @@ in {
       key = "${step-path}/ca.key";
       db = {
         type = "badgerV2";
-        dataSource = "/var/lib/step-ca/db";
+        dataSource = "${step-path}/db";
       };
       authority = {
         claims = {
@@ -42,6 +42,20 @@ in {
         provisioners = [{
           type = "ACME";
           name = "acme";
+        }
+        {
+          type = "JWK";
+          name = "ca@conlon.dev";
+          encryptedKey = "eyJhbGciOiJQQkVTMi1IUzI1NitBMTI4S1ciLCJjdHkiOiJqd2sranNvbiIsImVuYyI6IkEyNTZHQ00iLCJwMmMiOjEwMDAwMCwicDJzIjoiMGxHeHZCenp5NENtbmxEazFsSnphdyJ9.Lu9aGOWwelk3-kdYG9074YKQvl9GeLJ2oI7iX9kTzYxs8JznTbTSXw.X4IOfMajiUqV6Hd8.vtbgEs3N8C857RTGkqV5QM4IWpFfVr3sjwEeYr4sw1wHMdrG7GhdjBHWvoBfrKDsa5WaG9G3GZXLLnPd2eeXphxUBa9y6KpDORw2Uwtjm700dnt6DBlJShqcBkgvJt7SYQhySJ9ajQX4ZBRz5W12sprKShmpvwIvQLW-0Z1bRwHvbiusWCxfLVQShzkrryeRkGSHoGC-uFW2Y4899U7c0juNgqtVQXaE5SdiBWK0209f4LPmjRUKeaPDE03_2wEL3iv3mhbKEmEldqY7Rpj7lCKxTbt9_o5L-eMChV31LuoaxvkUI0iHyhwMaFj1TBBhrO7NiQ_QOp4ViKEfp8A.GKv5ZkgKl2Mu8aoGD_NIeg";
+          key = {
+            use = "sig";
+            kty = "EC";
+            crv = "P-256";
+            alg = "ES256";
+            kid = "ZteIoNH1VzfhfCwgb8pYd7E72LR5-a1i2VmN-tmVnho";
+            x = "Ipkyt1hJ0a5jpdFvkm97mQTF3m5JPg78izuK8XyILaE";
+            y = "lgQ4iOHfIaEElyy9GOOq0BsQGYx4MCLiQqjWbrM4eTw";
+          };
         }];
       };
     };
@@ -55,14 +69,14 @@ in {
   users.groups.step-ca = { };
 
   systemd.tmpfiles.rules = [
-    "d /var/lib/step-ca 700 step-ca step-ca"
-    "Z /var/lib/step-ca 700 step-ca step-ca"
+    "d ${step-path} 700 step-ca step-ca"
+    "Z ${step-path} 700 step-ca step-ca"
   ];
 
   systemd.services."step-ca" = {
     serviceConfig = {
-      WorkingDirectory = lib.mkForce "/var/lib/step-ca";
-      Environment = lib.mkForce "Home=/var/lib/step-ca";
+      WorkingDirectory = lib.mkForce "${step-path}";
+      Environment = lib.mkForce "Home=${step-path}";
       User = "step-ca";
       Group = "step-ca";
       DynamicUser = lib.mkForce false;

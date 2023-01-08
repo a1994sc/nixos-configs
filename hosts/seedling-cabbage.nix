@@ -12,7 +12,7 @@
       /etc/nixos/modules/compose/pihole-sync-leaf.nix
     ];
 
-  networking.hostName = "seedling01";
+  networking.hostName = "seedling-cabbage";
 
   nix.gc.dates = "Fri 02:00";
 

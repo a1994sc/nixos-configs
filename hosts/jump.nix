@@ -12,8 +12,9 @@ in {
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
       /etc/nixos/modules/step-ca.nix
-      "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
+      /etc/nixos/modules/wireguard.nix
       /etc/nixos/hosts/home/manager.nix
+      "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
     ];
 
   networking.hostName = "jump-host";

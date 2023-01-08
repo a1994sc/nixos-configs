@@ -35,6 +35,10 @@
     email = "${config.networking.hostName}@${config.networking.domain}";
     server = "https://10.2.1.9/acme/acme/directory";
     validMinDays = 2;
+    keyType = "ec384";
+    extraLegoFlags = [
+      "--http"
+    ];
   };
 
   nix = {
