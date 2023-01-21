@@ -28,42 +28,4 @@ in {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
-
-  security.acme.certs."nip.io" = {
-    domain = "${domain-name}";
-    listenHTTP = ":${acme-ports}";
-    reloadServices = [
-      "config.services.nginx"
-    ];
-  };
-
-  services.nginx = {
-    enable = true;
-    virtualHosts."${domain-name}" = {
-      enableACME = true;
-      locations = {
-        "/" = {
-          proxyPass = "http://127.0.0.1:8080";
-          proxyWebsockets = true; # needed if you need to use WebSocket
-          extraConfig =
-            "proxy_ssl_server_name on;" +
-            "proxy_pass_header Authorization;";
-        };
-        "/.well-known/acme-challenge" = {
-          proxyPass = "http://127.0.0.1:${acme-ports}";
-        };
-      };
-      listen = [
-        {
-          addr = "0.0.0.0";
-          port = 443;
-          ssl = true;
-        }
-        {
-          addr = "0.0.0.0";
-          port = 80;
-        }
-      ];
-    };
-  };
 }
