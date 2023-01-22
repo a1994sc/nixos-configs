@@ -43,6 +43,7 @@ in {
         autoStart = true;
         extraOptions = [
           "--cap-add=NET_ADMIN"
+          "--pull=always"
         ];
       };
       "pihole-sync-sender" = {
