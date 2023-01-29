@@ -7,6 +7,7 @@ in {
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
       /etc/nixos/modules/sops.nix
+      /etc/nixos/modules/acme.nix
       /etc/nixos/modules/docker.nix
       /etc/nixos/modules/compose/watchtower.nix
       /etc/nixos/modules/compose/pihole-sync-leaf.nix
