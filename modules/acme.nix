@@ -10,6 +10,10 @@
     ${pkgs.acme-sh}/bin/acme.sh --issue --standalone -d ${ip}.nip.io -d ${ip} --server https://${server}/acme/acme/directory --ca-bundle /etc/nixos/certs/derpy.crt --fullchain-file ${config.users.users.acme.home}/${fullchain} --cert-file ${config.users.users.acme.home}/${cert} --key-file ${config.users.users.acme.home}/${key} --httpport ${port} --force
     /run/wrappers/bin/sudo ${pkgs.systemd}/bin/systemctl reload nginx
   '';
+
+  acme-sh-script-init = pkgs.writeShellScriptBin "acme-certs.sh" ''
+    ${pkgs.acme-sh}/bin/acme.sh --issue --standalone -d ${ip}.nip.io -d ${ip} --server https://${server}/acme/acme/directory --ca-bundle /etc/nixos/certs/derpy.crt --fullchain-file ${config.users.users.acme.home}/${fullchain} --cert-file ${config.users.users.acme.home}/${cert} --key-file ${config.users.users.acme.home}/${key} --force
+  '';
 in {
 
   users.groups.acme = { };
@@ -59,16 +63,27 @@ in {
       };
   };
 
-  systemd.services.acme-sh= {
-    serviceConfig = {
-      Type = "oneshot";
-      User = "${config.users.users.acme.name}";
+  systemd.services = {
+    acme-sh = {
+      serviceConfig = {
+        Type = "oneshot";
+        User = "${config.users.users.acme.name}";
+      };
+      path = with pkgs; [ acme-sh ];
+      script = "${acme-sh-script}/bin/acme-certs.sh";
     };
-    path = with pkgs; [ acme-sh ];
-    script = "${acme-sh-script}/bin/acme-certs.sh";
+    acme-sh-init = {
+      serviceConfig = {
+        Type = "oneshot";
+        User = "${config.users.users.acme.name}";
+      };
+      path = with pkgs; [ acme-sh ];
+      script = "${acme-sh-script-init}/bin/acme-certs.sh";
+    };
   };
 
   systemd.timers.acme-sh = {
+    enable = true;
     wantedBy = [ "timers.target" ];
     partOf = [ "acme-sh.service" ];
     timerConfig = {
