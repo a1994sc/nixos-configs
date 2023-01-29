@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }: let
-  domain-name = "10-2-1-6.nip.io";
-  acme-ports  = "8000";
+
 in {
   imports =
     [
@@ -8,6 +7,7 @@ in {
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
       /etc/nixos/modules/sops.nix
+      /etc/nixos/modules/acme.nix
       /etc/nixos/modules/docker.nix
       /etc/nixos/modules/compose/watchtower.nix
       /etc/nixos/modules/compose/pihole-sync-trunk.nix

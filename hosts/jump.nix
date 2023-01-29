@@ -4,17 +4,17 @@
 
 { config, lib, pkgs, ... }:
 let
-  rev = "f72e050c3ef148b1131a0d2df55385c045e4166b";
+
 in {
   imports =
     [
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/bare.nix
       /etc/nixos/modules/tailscale.nix
+      /etc/nixos/modules/sops.nix
       /etc/nixos/modules/step-ca.nix
       /etc/nixos/modules/wireguard.nix
       /etc/nixos/hosts/home/manager.nix
-      "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops"
     ];
 
   networking.hostName = "jump-host";

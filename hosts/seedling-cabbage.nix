@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }: let
 
-{
+in {
   imports =
     [
       /etc/nixos/modules/main-config.nix
@@ -27,5 +27,4 @@
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
-
 }

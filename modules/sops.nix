@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  rev = "d92fba1bfc9f64e4ccb533701ddd8590c0d8c74a";
+  rev = "b6ab3c61e2ca5e07d1f4eb1b67304e2670ea230c";
 #  src = fetchFromGitHub {
 #    owner = "Mic92";
 #    repo = "sops-nix";

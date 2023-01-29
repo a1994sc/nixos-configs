@@ -24,7 +24,7 @@ in {
         ports = [
           "53:53/tcp"
           "53:53/udp"
-          "8080:80/tcp"
+          "127.0.0.1:8080:80/tcp"
         ];
         environment = {
           TZ = "America/New_York";
