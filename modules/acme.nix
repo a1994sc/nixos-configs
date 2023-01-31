@@ -13,6 +13,7 @@
 
   acme-sh-script-init = pkgs.writeShellScriptBin "acme-certs.sh" ''
     ${pkgs.acme-sh}/bin/acme.sh --issue --standalone -d ${ip}.nip.io -d ${ip} --server https://${server}/acme/acme/directory --ca-bundle /etc/nixos/certs/derpy.crt --fullchain-file ${config.users.users.acme.home}/${fullchain} --cert-file ${config.users.users.acme.home}/${cert} --key-file ${config.users.users.acme.home}/${key} --force
+    ${pkgs.coreutils-full}/bin/chown ${config.users.users.acme.name}:${config.users.users.acme.group} -R ${config.users.users.acme.home}
   '';
 in {
 
@@ -75,7 +76,6 @@ in {
     acme-sh-init = {
       serviceConfig = {
         Type = "oneshot";
-        User = "${config.users.users.acme.name}";
       };
       path = with pkgs; [ acme-sh ];
       script = "${acme-sh-script-init}/bin/acme-certs.sh";
@@ -87,7 +87,7 @@ in {
     wantedBy = [ "timers.target" ];
     partOf = [ "acme-sh.service" ];
     timerConfig = {
-      OnCalendar = "48hr";
+      OnCalendar = "*-*-1,4,7,10,13,16,19,22,25,28 00:00:00";
       Unit = "acme-sh.service";
     };
   };
