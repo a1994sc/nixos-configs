@@ -1,9 +1,13 @@
-{ config, lib, pkgs, ... }:
-
-{
+{ config, lib, pkgs, ... }: let
+  ip = let eth = __elemAt config.networking.interfaces.eth0.ipv4.addresses 0; in eth.address;
+  server = "10.2.1.9";
+  dns00  = "10.2.1.6";
+  dns01  = "10.2.1.7";
+in {
 
   users.groups.nix-serve = {};
   users.users.nix-serve = {
+    home = "/mnt/nginx/";
     isSystemUser = true;
     group = "nix-serve";
   };
@@ -17,21 +21,21 @@
   services.nix-serve = {
     enable = true;
     secretKeyFile = "/run/secrets/cache-priv-key.pem";
+    bindAddress = "127.0.0.1";
   };
 
-  services.nginx = {
+  services.nginx = {services.nginx = {
     user = "nix-serve";
     group = "nix-serve";
-    # enable = true;
     virtualHosts = {
-      "cache.10.2.1.9.nip.io" = {
+      "cache.${ip}.nip.io" = {
         serverAliases = [ "binarycache" ];
-        # locations."/".extraConfig = ''
-        #   proxy_pass http://localhost:${toString config.services.nginx.port};
-        #   proxy_set_header Host $host;
-        #   proxy_set_header X-Real-IP $remote_addr;
-        #   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        # '';
+        locations."/".extraConfig = ''
+          proxy_pass http://localhost:${toString config.services.nix-serve.port};
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        '';
         locations."~ ^/nix-cache-info".extraConfig = ''
           proxy_store        on;
           proxy_store_access user:rw group:rw all:r;
