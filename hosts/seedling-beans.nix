@@ -9,7 +9,6 @@ in {
       /etc/nixos/modules/sops.nix
       /etc/nixos/modules/acme.nix
       /etc/nixos/modules/docker.nix
-      /etc/nixos/modules/compose/watchtower.nix
       /etc/nixos/modules/compose/pihole-sync-trunk.nix
     ];
 
@@ -28,4 +27,10 @@ in {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
+
+  virtualisation.oci-containers.containers."pihole".extraOptions = pkgs.lib.mkForce [
+    "--cap-add=NET_ADMIN"
+    "--pull=always"
+    "--hostname=pihole-primary"
+  ];
 }

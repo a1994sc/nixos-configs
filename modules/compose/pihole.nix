@@ -23,6 +23,7 @@ in {
     environment = {
       TZ = "America/New_York";
       WEBPASSWORD_FILE = "/run/secrets/pihole";
+      # PIHOLE_DNS_ = "10.2.1.6#5053;10.2.1.7#5053";
     };
     volumes = [
       "/mnt/docker/pihole/etc-pihole:/etc/pihole"
