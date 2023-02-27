@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }: let
 
 in {
-  imports = [ 
-    /etc/nixos/modules/compose/docker.nix
+  imports = [
+    ./.
     /etc/nixos/modules/compose/pihole.nix
   ];
 

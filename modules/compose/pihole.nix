@@ -4,8 +4,8 @@
       nameserver 127.0.0.1
     '';
 in {
-  imports = [ 
-    /etc/nixos/modules/compose/docker.nix
+  imports = [
+    ./.
   ];
 
   sops.secrets.pihole = {
