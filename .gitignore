@@ -1,5 +1,6 @@
-./configuration.nix
-./hardware-configuration.nix
+configuration.nix
+hardware-configuration.nix
+daily.ignore
 *.log
 *.decrypted*
 ./host/home/configs/home.nix
