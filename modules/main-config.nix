@@ -86,7 +86,6 @@ in {
       serviceConfig = {
         Type = "oneshot";
       };
-      path = with pkgs; [ git-rebuild ];
       script = "${git-rebuild-script}/bin/rebuid.sh";
     };
     timers.git-rebuild = {
