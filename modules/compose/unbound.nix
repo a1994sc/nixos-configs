@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }: let
   ip = let eth = __elemAt config.networking.interfaces.eth0.ipv4.addresses 0; in eth.address;
+
   unboundConf = pkgs.writeText "unbound.conf"
     ''
     server:
@@ -27,6 +28,7 @@
       private-address: fd00::/8
       private-address: fe80::/10
     '';
+
   roots-sh-script = pkgs.writeShellScriptBin "roots-certs.sh" ''
     ${pkgs.coreutils-full}/bin/mkdir -p /var/lib/unbound/
     ${pkgs.wget}/bin/wget https://www.internic.net/domain/named.root -qO- | ${pkgs.coreutils-full}/bin/tee /var/lib/unbound/root.hints
@@ -34,8 +36,8 @@
     ${pkgs.coreutils-full}/bin/cp ${unboundConf} /mnt/docker/unbound/unbound.conf
   '';
 in {
-  imports = [ 
-    /etc/nixos/modules/compose/docker.nix
+  imports = [
+    ./.
   ];
 
   virtualisation.oci-containers.containers."unbound" = {

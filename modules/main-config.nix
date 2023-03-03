@@ -93,7 +93,7 @@ in {
       wantedBy = [ "timers.target" ];
       partOf = [ "git-rebuild.service" ];
       timerConfig = {
-        OnCalendar = "*-*-* */3:00:00";
+        OnCalendar = "0/3:00:00";
         Unit = "git-rebuild.service";
       };
     };
