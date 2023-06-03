@@ -33,4 +33,9 @@ in {
     "--pull=always"
     "--hostname=pihole-secondary"
   ];
+
+  networking.nameservers = [
+    1.1.1.2
+    1.0.0.2
+  ];
 }
