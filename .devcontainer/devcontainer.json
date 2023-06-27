@@ -1,17 +1,21 @@
 {
   "image": "ghcr.io/xtruder/nix-devcontainer:latest",
-  "updateRemoteUserUID": false,
+  "updateRemoteUserUID": true,
+  "privileged": true,
   "mounts": [
     "source=nix,target=/nix,type=volume",
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/code/.ssh,type=bind,readonly",
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/code/.kube,type=bind,readonly"
   ],
-  "onCreateCommand": "nix-shell --command 'echo done building nix dev environment'",
+  "runArgs": [ 
+    "--userns=keep-id:uid=1000,gid=1000"
+  ],
   "customizations": {
     "vscode": {
     "extensions": [
         "arrterian.nix-env-selector",
         "jnoortheen.nix-ide",
+        "bbenoist.nix",
         // "fsevenm.run-it-on",
         // "ms-azuretools.vscode-docker",
         "yzhang.markdown-all-in-one"
