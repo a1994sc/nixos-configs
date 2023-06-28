@@ -33,6 +33,7 @@ in {
         type = "badgerV2";
         dataSource = "${step-path}/db";
       };
+      logger.format = "text";
       authority = {
         claims = {
           minTLSCertDuration = "5m";

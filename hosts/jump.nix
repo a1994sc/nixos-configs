@@ -51,6 +51,11 @@ in {
     prefixLength = 24;
   } ];
 
+  networking.nameservers = [
+    "1.1.1.2"
+    "1.0.0.2"
+  ];
+
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
