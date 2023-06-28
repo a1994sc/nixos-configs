@@ -10,14 +10,12 @@ in {
     [
       /etc/nixos/modules/main-config.nix
       /etc/nixos/modules/bare.nix
-      /etc/nixos/modules/tailscale.nix
       /etc/nixos/modules/sops.nix
       /etc/nixos/modules/step-ca.nix
       /etc/nixos/modules/wireguard.nix
-      /etc/nixos/hosts/home/manager.nix
     ];
 
-  networking.hostName = "jump-host";
+  networking.hostName = "jump";
 
   nix.gc.dates = "Wed 02:00";
 
@@ -25,53 +23,14 @@ in {
 
   boot.cleanTmpDir = true;
 
-  home-manager.users.ascii = { pkgs, ... }: {
-    home.packages = [ pkgs.atool pkgs.httpie ];
-    programs.bash.enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
     kubectl
     kubernetes-helm
-    # istioctl
     terraform
     ansible
-    nix-prefetch
-    # fluxcd
-    # age
-    # gnupg
-    # gitops
-    # cloudflared
   ];
 
-  services.nginx = {
-    enable = false;
-    streamConfig = ''
-      upstream k3s_servers {
-        server 10.2.25.100:6443;
-        server 10.2.25.101:6443;
-        server 10.2.25.102:6443;
-      }
-
-      server {
-        listen 6443;
-        proxy_pass k3s_servers;
-      }
-    '';
-  };
-
   programs.ssh.startAgent = true;
-
-  users.users.jump = {
-    isNormalUser = true;
-    extraGroups  = [];
-    openssh.authorizedKeys.keys =  [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoTjm581SSJi51VuyDXkGj+JThQOavxicFgK1Z/YlN pihole@adrp.xyz"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPEVDFj/DsBQNjAoid6lbcJhWWyx5Gq6VzSJGKvK+bR6 pixel7@adrp.xyz"
-    ];
-  };
-
-  sops.age.keyFile = "/home/ascii/.config/sops/age/keys.txt";
 
   sops.secrets.ascii = {
     owner = "ascii";
@@ -84,13 +43,6 @@ in {
     owner = "ascii";
     path = "/home/ascii/.ssh/vault";
     sopsFile = /etc/nixos/secrets/vault.yaml;
-    mode = "0600";
-  };
-
-  sops.secrets.jump = {
-    owner = "jump";
-    path = "/home/jump/.ssh/jump";
-    sopsFile = /etc/nixos/secrets/jump.yaml;
     mode = "0600";
   };
 
