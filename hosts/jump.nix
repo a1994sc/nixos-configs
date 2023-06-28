@@ -21,7 +21,7 @@ in {
 
   system.autoUpgrade.dates = "Wed 04:00";
 
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   environment.systemPackages = with pkgs; [
     kubectl
