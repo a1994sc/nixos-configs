@@ -1,18 +1,14 @@
 { config, lib, pkgs, ... }: let
-
+  path = "/etc/nixos";
 in {
-  imports =
-    [
-      /etc/nixos/modules/main-config.nix
-      /etc/nixos/modules/bare.nix
-      # /etc/nixos/modules/tailscale.nix
-      # /etc/nixos/modules/sops.nix
-      # /etc/nixos/modules/acme.nix
-      # /etc/nixos/modules/docker.nix
-      # /etc/nixos/modules/compose/pihole-sync-leaf.nix
-    ];
+  imports = [
+    "${path}/modules/main-config.nix"
+    "${path}/modules/bare.nix"
+    "${path}/modules/blocky.nix"
+    # "${path}/hosts/addons/dns2.nix"
+  ];
 
-  networking.hostName = "dns2.adrp.xyz";
+  networking.hostName = "dns2";
 
   nix.gc.dates = "Fri 02:00";
 
@@ -27,11 +23,6 @@ in {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
-
-  virtualisation.oci-containers.containers."pihole".extraOptions = pkgs.lib.mkForce [
-    "--cap-add=NET_ADMIN"
-    "--hostname=pihole-secondary"
-  ];
 
   networking.nameservers = [
     "1.1.1.2"

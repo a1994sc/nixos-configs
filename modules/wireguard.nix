@@ -16,12 +16,8 @@
     };
   };
 
-  services.dnsmasq = {
-      enable = true;
-      extraConfig = ''
-        interface=wg0
-      '';
-    };
+  services.dnsmasq.enable = true;
+  services.dnsmasq.settings.interface = "wg0";
 
   networking.wireguard.interfaces = {
     wg0 = {
