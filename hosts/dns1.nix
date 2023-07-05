@@ -7,27 +7,31 @@ in {
     "${path}/modules/blocky.nix"
   ];
 
-  networking.hostName = "dns1";
-
   nix.gc.dates = "Mon 02:00";
 
   system.autoUpgrade.dates = "Mon 04:00";
 
-  networking.interfaces.eth0 = {
-    useDHCP = pkgs.lib.mkForce false;
-    ipv4.addresses = [ {
-      address = "10.2.1.6";
-      prefixLength = 24;
-    } ]; 
+  networking = {
+    hostName = "dns1";
+    defaultGateway = {
+      address = "10.2.1.1";
+      interface = "eth0";
+    };
+    interfaces.eth0 = {
+      useDHCP = pkgs.lib.mkForce false;
+      ipv4.addresses = [ {
+        address = "10.2.1.6";
+        prefixLength = 24;
+      } ]; 
+    };
+    nameservers = [
+      "1.1.1.2"
+      "1.0.0.2"
+    ];
   };
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
-
-  networking.nameservers = [
-    "1.1.1.2"
-    "1.0.0.2"
-  ];
 }
