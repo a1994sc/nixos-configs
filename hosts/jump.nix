@@ -25,10 +25,13 @@ in {
 
   programs.ssh.startAgent = true;
 
-  networking.interfaces.eth0.ipv4.addresses = [ {
-    address = "10.2.1.9";
-    prefixLength = 24;
-  } ];
+  networking.interfaces.eth0 = {
+    useDHCP = pkgs.lib.mkForce false;
+    ipv4.addresses = [ {
+      address = "10.2.1.9";
+      prefixLength = 24;
+    } ]; 
+  };
 
   networking.nameservers = [
     "1.1.1.2"

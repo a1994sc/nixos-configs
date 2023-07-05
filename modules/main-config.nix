@@ -6,6 +6,7 @@ in {
   ];
 
   programs.bash.enableCompletion = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
 
   networking = {
     domain = "adrp.xyz";
@@ -26,10 +27,10 @@ in {
       automatic = true;
       options = "--delete-older-than 30d";
     };
-    # Free up to 2GiB whenever there is less than 100MiB left.
+    # Free up to 4GiB whenever there is less than 1GiB left.
     extraOptions = ''
-      min-free = ${toString (100 * 1024 * 1024)}
-      max-free = ${toString (1024 * 1024 * 1024 * 2)}
+      min-free = ${toString (1024 * 1024 * 1024)}
+      max-free = ${toString (1024 * 1024 * 1024 * 4)}
     '';
     optimise = {
       automatic = true;
