@@ -1,17 +1,8 @@
 { config, pkgs, lib, ... }: let
-  git-rebuild-script = pkgs.writeShellScriptBin "rebuid.sh" ''
-    if [ -f /etc/nixos/daily.ignore ]; then
-      ${pkgs.coreutils-full}/bin/echo "Skipping daily rebuilding"
-    else
-      /run/wrappers/bin/sudo -u ${config.users.users.ascii.name} ${pkgs.git}/bin/git -C /etc/nixos/ clean -df
-      /run/wrappers/bin/sudo -u ${config.users.users.ascii.name} ${pkgs.git}/bin/git -C /etc/nixos/ stash
-      /run/wrappers/bin/sudo -u ${config.users.users.ascii.name} ${pkgs.git}/bin/git -C /etc/nixos/ pull
-      ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch
-    fi
-  '';
+  path = "/etc/nixos";
 in {
   imports = [
-    /etc/nixos/modules/ca-certs.nix
+    "${path}/modules/ca-certs.nix"
   ];
 
   programs.bash.enableCompletion = true;
@@ -81,24 +72,6 @@ in {
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
-    };
-  };
-
-  systemd = {
-    services.git-rebuild = {
-      serviceConfig = {
-        Type = "oneshot";
-      };
-      script = "${git-rebuild-script}/bin/rebuid.sh";
-    };
-    timers.git-rebuild = {
-      enable = true;
-      wantedBy = [ "timers.target" ];
-      partOf = [ "git-rebuild.service" ];
-      timerConfig = {
-        OnCalendar = "0/3:00:00";
-        Unit = "git-rebuild.service";
-      };
     };
   };
 }

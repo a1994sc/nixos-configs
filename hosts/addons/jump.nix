@@ -1,5 +1,4 @@
-{ config, lib, pkgs, ... }:
-let
+{ config, lib, pkgs, ... }: let
   path = "/etc/nixos";
 in {
   imports =[

@@ -2,9 +2,9 @@
   path = "/etc/nixos";
 in {
   imports = [
-    # "${path}/modules/tailscale.nix"
+    "${path}/modules/tailscale.nix"
     "${path}/modules/sops.nix"
-    # "${path}/modules/acme.nix"
+    "${path}/modules/acme.nix"
   ];
 
   virtualisation.oci-containers.containers."pihole".extraOptions = pkgs.lib.mkForce [
