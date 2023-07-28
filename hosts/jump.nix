@@ -6,6 +6,7 @@ in {
     "${path}/modules/main-config.nix"
     "${path}/modules/bare.nix"
     "${path}/hosts/addons/jump.nix"
+    "${path}/modules/blocky.nix"
   ];
   nix.gc.dates = "Wed 02:00";
 
@@ -28,7 +29,7 @@ in {
     #   address = "10.2.1.1";
     #   interface = "eth0";
     # };
-    interfaces.eno1 = {
+    interfaces.eth0 = {
       useDHCP = pkgs.lib.mkForce true;
     #   ipv4.addresses = [ {
     #     address = "10.2.1.9";
