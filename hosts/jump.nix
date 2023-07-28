@@ -28,7 +28,7 @@ in {
     #   address = "10.2.1.1";
     #   interface = "eth0";
     # };
-    interfaces.eth0 = {
+    interfaces.eno1 = {
       useDHCP = pkgs.lib.mkForce true;
     #   ipv4.addresses = [ {
     #     address = "10.2.1.9";
