@@ -4,7 +4,7 @@ in {
   imports =[
     "${path}/modules/sops.nix"
     "${path}/modules/step-ca.nix"
-    "${path}/modules/wireguard.nix"
+    # "${path}/modules/wireguard.nix"
   ];
 
   sops.secrets.ascii = {

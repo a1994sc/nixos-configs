@@ -24,16 +24,16 @@ in {
 
   networking = {
     hostName = "jump";
-    defaultGateway = {
-      address = "10.2.1.1";
-      interface = "eth0";
-    };
+    # defaultGateway = {
+    #   address = "10.2.1.1";
+    #   interface = "eth0";
+    # };
     interfaces.eth0 = {
-      useDHCP = pkgs.lib.mkForce false;
-      ipv4.addresses = [ {
-        address = "10.2.1.9";
-        prefixLength = 24;
-      } ]; 
+      useDHCP = pkgs.lib.mkForce true;
+    #   ipv4.addresses = [ {
+    #     address = "10.2.1.9";
+    #     prefixLength = 24;
+    #   } ]; 
     };
     nameservers = [
       "1.1.1.2"
