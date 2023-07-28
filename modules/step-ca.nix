@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }: let
   step-path = "/var/lib/step-ca";
+  ip = let eth = __elemAt config.networking.interfaces.eth0.ipv4.addresses 0; in eth.address;
 in {
   sops.secrets = {
     pass = {
@@ -25,7 +26,7 @@ in {
     intermediatePasswordFile = "${step-path}/pass";
     address = "0.0.0.0";
     settings = {
-      dnsNames = [ "10.2.1.9" ];
+      dnsNames = [ "${ip}" ];
       root = "/etc/nixos/certs/derpy.crt";
       crt = "/etc/nixos/certs/derpy-jump.crt";
       key = "${step-path}/ca.key";
