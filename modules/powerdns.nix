@@ -26,11 +26,14 @@
     ];
   };
 
+  systemd.services.mysql.before = [ "pdns.service" ];
+
   services.powerdns = {
     enable = true;
+    secretFile = "/run/secrets/env";
     extraConfig = ''
       launch=gmysql
-      gmysql-host=127.0.0.1
+      gmysql-host=localhost
       gmysql-port=3306
       gmysql-user=powerdns
       gmysql-dbname=powerdns
@@ -50,9 +53,3 @@
     '';
   };
 }
-
-      # gmysql_host=127.0.0.1
-      # gmysql_port=3306
-      # gmysql_user=powerdns
-      # gmysql_dbname=powerdns
-      # gmysql_password=$POWERDNS_MYSQL_PASS

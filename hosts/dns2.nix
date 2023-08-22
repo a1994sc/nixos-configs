@@ -3,8 +3,10 @@
 in {
   imports = [
     "${path}/modules/main-config.nix"
+    "${path}/modules/sops.nix"
     "${path}/modules/bare.nix"
     "${path}/modules/blocky.nix"
+    "${path}/modules/powerdns.nix"
   ];
 
   nix.gc.dates = "Fri 02:00";
@@ -13,25 +15,20 @@ in {
 
   networking = {
     hostName = "dns2";
-    defaultGateway = {
-      address = "10.2.1.1";
-      interface = "eth0";
-    };
-    interfaces.eth0 = {
-      useDHCP = pkgs.lib.mkForce false;
-      ipv4.addresses = [ {
-        address = "10.2.1.7";
-        prefixLength = 24;
-      } ]; 
-    };
     nameservers = [
       "1.1.1.2"
       "1.0.0.2"
     ];
-  };
-
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
+    firewall.enable = pkgs.lib.mkForce true;
+    firewall.interfaces.eth0 = {
+      allowedUDPPorts = [
+        53
+      ];
+      allowedTCPPorts = [
+        22
+        53
+        8081
+      ];
+    };
   };
 }

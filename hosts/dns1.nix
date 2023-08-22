@@ -27,6 +27,7 @@ in {
       allowedTCPPorts = [
         22
         53
+        8081
       ];
     };
   };
