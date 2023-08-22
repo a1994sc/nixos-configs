@@ -4,7 +4,7 @@
 in {
   sops.secrets.primary-env = {
     owner = "${config.services.mysql.user}";
-    sopsFile = /etc/nixos/secrets/dns/powerdns.yml;
+    sopsFile = /etc/nixos/secrets/dns/powerdns-primary.yml;
     mode = "0600";
   };
 
