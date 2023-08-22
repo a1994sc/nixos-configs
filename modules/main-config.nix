@@ -43,7 +43,7 @@ in {
 
   services.xserver.enable = false;
 
-  users.users.ascii = {
+  users.users.aconlon = {
     isNormalUser = true;
     extraGroups  = [ "wheel" "dialout" ];
     openssh.authorizedKeys.keys = [

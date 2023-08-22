@@ -1,12 +1,6 @@
 { config, pkgs, lib, ... }:
 let
   rev = "master";
-#  src = fetchFromGitHub {
-#    owner = "Mic92";
-#    repo = "sops-nix";
-#    rev = "f075361ecbde21535b38e41dfaa28a28f160855c";
-#    sha256 = "sha256-uCdQ2fzIPGakHw2TkvOncUvCl7Fo7z/vagpDWYooO7s=";
-#  };
 in {
   imports = [ "${builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/${rev}.tar.gz"}/modules/sops" ];
 
@@ -15,5 +9,5 @@ in {
     gnupg
   ];
 
-  sops.age.keyFile = "/home/ascii/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/home/aconlon/.config/sops/age/keys.txt";
 }
