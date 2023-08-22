@@ -1,9 +1,11 @@
-{ config, pkgs, lib, ... }:
-
-{
-  sops.secrets.env = {
+{ config, pkgs, lib, ... }: let
+  db_user = "powerdns-rep";
+  db_tabl = "powerdns";
+  pd_mast = "10.3.10.5";
+in {
+  sops.secrets.replica-env = {
     owner = "${config.services.mysql.user}";
-    sopsFile = /etc/nixos/secrets/dns/powerdns.yml;
+    sopsFile = /etc/nixos/secrets/dns/powerdns-replica.yml;
     mode = "0600";
   };
 
@@ -12,15 +14,15 @@
     package = pkgs.mariadb;
     initialDatabases = [
       {
-        name = "powerdns";
+        name = "${db_tabl}";
         schema = /etc/nixos/modules/database/powerdns.sql;
       }
     ];
     ensureUsers = [
       {
-        name = "powerdns";
+        name = "${db_user}";
         ensurePermissions = {
-          "powerdns.*" = "ALL PRIVILEGES";
+          "${db_user}.*" = "ALL PRIVILEGES";
         };
       }
     ];
@@ -30,25 +32,20 @@
 
   services.powerdns = {
     enable = true;
-    secretFile = "/run/secrets/env";
+    secretFile = "/run/secrets/replica-env";
     extraConfig = ''
       launch=gmysql
       gmysql-host=localhost
       gmysql-port=3306
-      gmysql-user=powerdns
-      gmysql-dbname=powerdns
+      gmysql-user=${db_user}
+      gmysql-dbname=${db_user}
       gmysql-password=$POWERDNS_MYSQL_PASS
-      master=yes
-      api=yes
-      api-key=$POWERDNS_API_PASS
-      webserver=yes
-      webserver-allow-from=127.0.0.1,10.0.0.0/8
-      webserver-address=0.0.0.0
-      webserver-password=$POWERDNS_WEB_PASS
-      version-string=anonymous
+      master=no
+      slave=yes
+      slave-cycle-interval=60
       default-ttl=1500
       allow-notify-from=0.0.0.0
-      allow-axfr-ips=127.0.0.1
+      allow-axfr-ips=${pd_mast}/32
       local-port=8154
     '';
   };

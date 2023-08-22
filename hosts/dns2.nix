@@ -6,7 +6,7 @@ in {
     "${path}/modules/sops.nix"
     "${path}/modules/bare.nix"
     "${path}/modules/blocky.nix"
-    "${path}/modules/powerdns.nix"
+    "${path}/modules/powerdns-primary.nix"
   ];
 
   nix.gc.dates = "Fri 02:00";
@@ -27,7 +27,7 @@ in {
       allowedTCPPorts = [
         22
         53
-        8081
+        3306
       ];
     };
   };
