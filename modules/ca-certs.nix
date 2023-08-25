@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  security.pki.certificates = [
+  security.pki.certificates        = [
     ''
     Derpy CA
     =========

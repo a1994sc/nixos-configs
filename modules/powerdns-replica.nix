@@ -1,39 +1,45 @@
 { config, pkgs, lib, ... }: let
-  db_user = "powerdns-rep";
-  db_tabl = "powerdns";
-  pd_mast = "10.3.10.5";
+  db_user                          = "powerdns";
+  db_tabl                          = "powerdns";
+  pd_mast                          = "10.3.10.5";
+  db_rep_user                      = "powerdns-rep";
+  db_rep_host                      = "10.3.10.6";
 in {
-  sops.secrets.replica-env = {
-    owner = "${config.services.mysql.user}";
-    sopsFile = /etc/nixos/secrets/dns/powerdns-replica.yml;
-    mode = "0600";
+  sops.secrets                     = {
+    rep-user                       = {
+      sopsFile                     = /etc/nixos/secrets/dns/powerdns-primary.yml;
+      mode                         = "0600";
+    };
+    replica-env                    = {
+      owner                        = "${config.services.mysql.user}";
+      sopsFile                     = /etc/nixos/secrets/dns/powerdns-replica.yml;
+      mode                         = "0600";
+    };
   };
 
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-    initialDatabases = [
-      {
-        name = "${db_tabl}";
-        schema = /etc/nixos/modules/database/powerdns.sql;
-      }
-    ];
-    ensureUsers = [
-      {
-        name = "${db_user}";
-        ensurePermissions = {
-          "${db_user}.*" = "ALL PRIVILEGES";
-        };
-      }
-    ];
+  services.mysql                   = {
+    enable                         = true;
+    package                        = pkgs.mariadb;
+    initialDatabases               = [{
+      name                         = "${db_tabl}";
+      schema                       = /etc/nixos/modules/database/powerdns.sql;
+    }];
+    replication                    = {
+      serverId                     = 2;
+      role                         = "slave";
+      masterUser                   = "${db_rep_user}";
+      masterPort                   = 3306;
+      masterHost                   = "${pd_mast}";
+      masterPassword               = (builtins.readFile "${config.sops.secrets.rep-user.path}");
+    };
   };
 
-  systemd.services.mysql.before = [ "pdns.service" ];
+  systemd.services.mysql.before    = [ "pdns.service" ];
 
-  services.powerdns = {
-    enable = true;
-    secretFile = "/run/secrets/replica-env";
-    extraConfig = ''
+  services.powerdns                = {
+    enable                         = true;
+    secretFile                     = "/run/secrets/replica-env";
+    extraConfig                    = ''
       launch=gmysql
       gmysql-host=localhost
       gmysql-port=3306

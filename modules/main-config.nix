@@ -1,52 +1,51 @@
 { config, pkgs, lib, ... }: let
-  path = "/etc/nixos";
+  path                             = "/etc/nixos";
 in {
-  imports = [
+  imports                          = [
     "${path}/modules/ca-certs.nix"
   ];
 
-  programs.bash.enableCompletion = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  programs.bash.enableCompletion   = true;
+  services.udev.packages           = [ pkgs.yubikey-personalization ];
 
-  networking = {
-    domain = "adrp.xyz";
-    search = [ "adrp.xyz" ];
-
-    wireless.enable = false;
-    useDHCP = false;
-    interfaces.eth0.useDHCP = true;
-    firewall.enable = false;
+  networking                       = {
+    domain                         = "adrp.xyz";
+    search                         = [ "adrp.xyz" ];
+    wireless.enable                = false;
+    useDHCP                        = false;
+    interfaces.eth0.useDHCP        = true;
+    firewall.enable                = false;
   };
 
-  nix = {
-    settings = {
-      max-jobs = "auto";
-      auto-optimise-store = true;
+  nix                              = {
+    settings                       = {
+      max-jobs                     = "auto";
+      auto-optimise-store          = true;
     };
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 30d";
+    gc                             = {
+      automatic                    = true;
+      options                      = "--delete-older-than 30d";
     };
     # Free up to 4GiB whenever there is less than 1GiB left.
-    extraOptions = ''
+    extraOptions                   = ''
       min-free = ${toString (1024 * 1024 * 1024)}
       max-free = ${toString (1024 * 1024 * 1024 * 4)}
     '';
-    optimise = {
-      automatic = true;
-      dates = [ "daily" ];
+    optimise                       = {
+      automatic                    = true;
+      dates                        = [ "daily" ];
     };
   };
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone                    = "America/New_York";
 
-  services.xserver.enable = false;
+  services.xserver.enable          = false;
 
-  users.users.aconlon = {
-    isNormalUser = true;
-    extraGroups  = [ "wheel" "dialout" ];
-    openssh.authorizedKeys.keys = [
+  users.users.aconlon              = {
+    isNormalUser                   = true;
+    extraGroups                    = [ "wheel" "dialout" ];
+    openssh.authorizedKeys.keys    = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTN+22xUz/NIZ/+E3B7bSQAl1Opxg0N7jIVGlAxTJw2 git@conlon.dev"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpoTjm581SSJi51VuyDXkGj+JThQOavxicFgK1Z/YlN pihole@adrp.xyz"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ+ijO8h19n6GB9am9cek91WjLvpn80w3Y5XthK3Tpo/ jump@adrp.xyz"
@@ -55,24 +54,24 @@ in {
     ];
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages       = with pkgs; [
     wget
     htop
     git
     python3
   ];
 
-  system.autoUpgrade = {
-    enable      = true;
-    allowReboot = true;
-    channel = https://nixos.org/channels/nixos-unstable;
+  system.autoUpgrade               = {
+    enable                         = true;
+    allowReboot                    = true;
+    channel                        = https://nixos.org/channels/nixos-unstable;
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
+  services.openssh                 = {
+    enable                         = true;
+    settings                       = {
+      PermitRootLogin              = "no";
+      PasswordAuthentication       = false;
     };
   };
 }

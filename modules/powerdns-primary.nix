@@ -1,38 +1,43 @@
 { config, pkgs, lib, ... }: let
-  db_user = "powerdns";
-  db_tabl = "powerdns";
+  db_user                          = "powerdns";
+  db_tabl                          = "powerdns";
+  db_host                          = "10.3.10.5";
+  db_rep_user                      = "powerdns-rep";
+  db_rep_host                      = "10.3.10.6";
 in {
-  sops.secrets.primary-env = {
-    owner = "${config.services.mysql.user}";
-    sopsFile = /etc/nixos/secrets/dns/powerdns-primary.yml;
-    mode = "0600";
+  sops.secrets                     = {
+    rep-user                       = {
+      sopsFile                     = /etc/nixos/secrets/dns/powerdns-primary.yml;
+      mode                         = "0600";
+    };
+    primary-env                    = {
+      owner                        = "${config.services.mysql.user}";
+      sopsFile                     = /etc/nixos/secrets/dns/powerdns-primary.yml;
+      mode                         = "0600";
+    };
   };
 
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-    initialDatabases = [
-      {
-        name = "${db_tabl}";
-        schema = /etc/nixos/modules/database/powerdns.sql;
-      }
-    ];
-    ensureUsers = [
-      {
-        name = "${db_user}";
-        ensurePermissions = {
-          "${db_user}.*" = "ALL PRIVILEGES";
-        };
-      }
-    ];
+  services.mysql                   = {
+    enable                         = true;
+    package                        = pkgs.mariadb;
+    initialDatabases               = [{
+      name                         = "${db_tabl}";
+      schema                       = /etc/nixos/modules/database/powerdns.sql;
+    }];
+    ensureUsers                    = [{
+      name                         = "${db_user}";
+      ensurePermissions            = {
+        "${db_user}.*"             = "ALL PRIVILEGES";
+      };
+    }];
   };
 
-  systemd.services.mysql.before = [ "pdns.service" ];
+  systemd.services.mysql.before    = [ "pdns.service" ];
 
-  services.powerdns = {
-    enable = true;
-    secretFile = "/run/secrets/primary-env";
-    extraConfig = ''
+  services.powerdns                = {
+    enable                         = true;
+    secretFile                     = "/run/secrets/primary-env";
+    extraConfig                    = ''
       launch=gmysql
       gmysql-host=localhost
       gmysql-port=3306
