@@ -6,7 +6,7 @@ in {
     "${path}/modules/sops.nix"
     "${path}/modules/bare.nix"
     "${path}/modules/blocky.nix"
-    # "${path}/modules/powerdns-replica.nix"
+    "${path}/modules/powerdns-replica.nix"
   ];
 
   nix.gc.dates                     = "Fri 02:00";
