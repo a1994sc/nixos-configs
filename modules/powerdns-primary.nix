@@ -36,18 +36,18 @@ in {
       name                         = "${db_tabl}";
       schema                       = /etc/nixos/modules/database/powerdns.sql;
     }];
-    ensureUsers                    = [{
-      name                         = "${db_user}";
-      ensurePermissions            = {
-        "${db_user}.*"             = "ALL PRIVILEGES";
-      };
-    }
-    {
-      name                         = "${db_rep_user}";
-      ensurePermissions            = {
-        "*.*"                      = "REPLICATION SLAVE";
-      };
-    }];
+    # ensureUsers                    = [{
+    #   name                         = "${db_user}";
+    #   ensurePermissions            = {
+    #     "${db_user}.*"             = "ALL PRIVILEGES";
+    #   };
+    # }
+    # {
+    #   name                         = "${db_rep_user}";
+    #   ensurePermissions            = {
+    #     "*.*"                      = "REPLICATION SLAVE";
+    #   };
+    # }];
     settings                       = {
       mysqld                       = {
         server_id                  = 1;

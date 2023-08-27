@@ -24,12 +24,12 @@ in {
       name                         = "${db_tabl}";
       schema                       = /etc/nixos/modules/database/powerdns.sql;
     }];
-    ensureUsers                    = [{
-      name                         = "${db_user}";
-      ensurePermissions            = {
-        "${db_user}.*"             = "ALL PRIVILEGES";
-      };
-    }];
+    # ensureUsers                    = [{
+    #   name                         = "${db_user}";
+    #   ensurePermissions            = {
+    #     "${db_user}.*"             = "ALL PRIVILEGES";
+    #   };
+    # }];
     settings                       = {
       mysqld                       = {
         server_id                  = 2;
