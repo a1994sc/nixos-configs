@@ -15,6 +15,18 @@ in {
       sopsFile                     = /etc/nixos/secrets/dns/powerdns-primary.yml;
       mode                         = "0600";
     };
+    tls-crt                        = {
+      owner                        = "${config.services.nginx.user}";
+      group                        = "${config.services.nginx.group}";
+      sopsFile                     = /etc/nixos/secrets/dns/dns1.yml;
+      mode                         = "0600";
+    };
+    tls-key                        = {
+      owner                        = "${config.services.nginx.user}";
+      group                        = "${config.services.nginx.group}";
+      sopsFile                     = /etc/nixos/secrets/dns/dns1.yml;
+      mode                         = "0600";
+    };
   };
 
   services.mysql                   = {
@@ -29,7 +41,22 @@ in {
       ensurePermissions            = {
         "${db_user}.*"             = "ALL PRIVILEGES";
       };
+    }
+    {
+      name                         = "${db_rep_user}";
+      ensurePermissions            = {
+        "*.*"                      = "REPLICATION SLAVE";
+      };
     }];
+    settings                       = {
+      mysqld                       = {
+        server_id                  = 1;
+        log-basename               = "dns1";
+        log-error                  = "/var/lib/mysql/mysql.err";
+        log-bin                    = "/var/lib/mysql/mysql-replication.log";
+        binlog-format              = "mixed";
+      };
+    };
   };
 
   systemd.services.mysql.before    = [ "pdns.service" ];
@@ -57,5 +84,31 @@ in {
       allow-axfr-ips=127.0.0.1
       local-port=8154
     '';
+  };
+
+  services.nginx                   = {
+    enable                         = true;
+    virtualHosts                   = {
+      "ip"                         = {
+        addSSL                     = true;
+        sslCertificate             = config.sops.secrets.tls-crt.path;
+        sslCertificateKey          = config.sops.secrets.tls-key.path;
+        serverName                 = "10.3.10.5";
+        listen                     = [{port = 8443;  addr="0.0.0.0"; ssl=true;}];
+        locations."/"              = {
+          proxyPass                = "http://127.0.0.1:8081/";
+        };
+      };
+      "dns1"                       = {
+        addSSL                     = true;
+        sslCertificate             = config.sops.secrets.tls-crt.path;
+        sslCertificateKey          = config.sops.secrets.tls-key.path;
+        serverName                 = "dns1.adrp.xyz";
+        listen                     = [{port = 8443;  addr="0.0.0.0"; ssl=true;}];
+        locations."/"              = {
+          proxyPass                = "http://127.0.0.1:8081/";
+        };
+      };
+    };
   };
 }

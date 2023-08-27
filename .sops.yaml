@@ -16,7 +16,7 @@ creation_rules:
   - age:
     - *master
     - *jump
-# - path_regex: archive/[^/]+.$
-#   key_groups:
-#   - pgp:
-#     - *allen
+- path_regex: archive/secrets/[^/]+.$
+  key_groups:
+  - pgp:
+    - *allen

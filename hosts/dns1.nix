@@ -6,6 +6,7 @@ in {
     "${path}/modules/sops.nix"
     "${path}/modules/bare.nix"
     "${path}/modules/blocky.nix"
+    "${path}/modules/step-ca.nix"
     "${path}/modules/powerdns-primary.nix"
   ];
 
@@ -24,8 +25,10 @@ in {
       allowedTCPPorts              = [
         22
         53
-        # 3306
-        8081
+        80
+        443
+        3306
+        8443
       ];
     };
   };

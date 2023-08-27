@@ -24,13 +24,20 @@ in {
       name                         = "${db_tabl}";
       schema                       = /etc/nixos/modules/database/powerdns.sql;
     }];
-    replication                    = {
-      serverId                     = 2;
-      role                         = "slave";
-      masterUser                   = "${db_rep_user}";
-      masterPort                   = 3306;
-      masterHost                   = "${pd_mast}";
-      masterPassword               = (builtins.readFile "${config.sops.secrets.rep-user.path}");
+    ensureUsers                    = [{
+      name                         = "${db_user}";
+      ensurePermissions            = {
+        "${db_user}.*"             = "ALL PRIVILEGES";
+      };
+    }];
+    settings                       = {
+      mysqld                       = {
+        server_id                  = 2;
+        log-basename               = "dns2";
+        log-error                  = "/var/lib/mysql/mysql.err";
+        log-bin                    = "/var/lib/mysql/mysql-replication.log";
+        binlog-format              = "mixed";
+      };
     };
   };
 
