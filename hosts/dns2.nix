@@ -20,11 +20,12 @@ in {
     ];
     firewall.enable                = pkgs.lib.mkForce true;
     firewall.interfaces.eth0       = {
-      allowedUDPPorts              = [ 53 ];
+      allowedUDPPorts              = [
+        53                         # DNS
+      ];
       allowedTCPPorts              = [
-        22
-        53
-        # 3306
+        22                         # SSH
+        53                         # DNS
       ];
     };
   };

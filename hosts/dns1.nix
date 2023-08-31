@@ -21,14 +21,15 @@ in {
     ];
     firewall.enable                = pkgs.lib.mkForce true;
     firewall.interfaces.eth0       = {
-      allowedUDPPorts              = [ 53 ];
+      allowedUDPPorts              = [
+        53                         # DNS
+      ];
       allowedTCPPorts              = [
-        22
-        53
-        80
-        443
-        3306
-        8443
+        22                         # SSH
+        53                         # DNS
+        443                        # Step-CA
+        3306                       # MYSQL
+        8443                       # PowerDNS API
       ];
     };
   };
