@@ -59,6 +59,7 @@ in {
     htop
     git
     python3
+    micro
   ];
 
   system.autoUpgrade               = {
