@@ -6,6 +6,7 @@ in {
     "${path}/modules/sops.nix"
     "${path}/modules/bare.nix"
     "${path}/modules/blocky.nix"
+    "${path}/modules/matchbox.nix"
     "${path}/modules/powerdns-replica.nix"
   ];
 
@@ -26,6 +27,7 @@ in {
       allowedTCPPorts              = [
         22                         # SSH
         53                         # DNS
+        8443                       # Matchbox
       ];
     };
   };
