@@ -24,6 +24,7 @@ in {
     };
   };
 
+  sops.validateSopsFiles           = false;
   sops.secrets                     = {
     ca-crt                         = {
       owner                        = "${config.users.users.matchbox.name}";
@@ -49,6 +50,11 @@ in {
       sopsFile                     = "${path}/secrets/dns/dns2.yml";
       mode                         = "0600";
     };
+  };
+
+  services.atftpd                  = {
+    enable                         = true;
+    root                           = "/srv/tftp";
   };
 
   systemd.services.matchbox        = {

@@ -23,6 +23,7 @@ in {
     firewall.interfaces.eth0       = {
       allowedUDPPorts              = [
         53                         # DNS
+        69                         # TFTP
       ];
       allowedTCPPorts              = [
         22                         # SSH
