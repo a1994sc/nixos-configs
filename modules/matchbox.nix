@@ -25,6 +25,12 @@ in {
   };
 
   sops.secrets                     = {
+    ca-crt                         = {
+      owner                        = "${config.users.users.matchbox.name}";
+      group                        = "${config.users.groups.matchbox.name}";
+      sopsFile                     = "${path}/secrets/dns/dns2.yml";
+      mode                         = "0600";
+    };
     tls-crt                        = {
       owner                        = "${config.users.users.matchbox.name}";
       group                        = "${config.users.groups.matchbox.name}";
@@ -54,7 +60,7 @@ in {
       MATCHBOX_RPC_ADDRESS         = "0.0.0.0:8443";
       MATCHBOX_DATA_PATH           = "${data-path}";
       MATCHBOX_ASSETS_PATH         = "${data-path}/assets";
-      MATCHBOX_CA_FILE             = "${path}/certs/derpy.crt";
+      MATCHBOX_CA_FILE             = config.sops.secrets.ca-crt.path;
       MATCHBOX_CERT_FILE           = config.sops.secrets.tls-crt.path;
       MATCHBOX_KEY_FILE            = config.sops.secrets.tls-key.path;
       MATCHBOX_PASSPHRASE          = (builtins.readFile config.sops.secrets.env.path);
