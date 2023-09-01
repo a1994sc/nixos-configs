@@ -2,6 +2,7 @@
   path                             = "/etc/nixos";
   user                             = "matchbox";
   data-path                        = "/var/lib/matchbox";
+  tftp-path                        = "/var/lib/atftp";
 in {
 
   nixpkgs.overlays                 = [
@@ -54,7 +55,7 @@ in {
 
   services.atftpd                  = {
     enable                         = true;
-    root                           = "/srv/tftp";
+    root                           = "${tftp-path}";
   };
 
   systemd.services.matchbox        = {
