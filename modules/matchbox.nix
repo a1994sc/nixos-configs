@@ -3,6 +3,10 @@
   user                             = "matchbox";
   data-path                        = "/var/lib/matchbox";
   tftp-path                        = "/var/lib/atftp";
+
+  docker-clear-sh-script           = pkgs.writeShellScriptBin "clean-up.sh" ''
+    ${pkgs.docker}/bin/docker system prune --force --all
+  '';
 in {
 
   nixpkgs.overlays                 = [
@@ -53,9 +57,57 @@ in {
     };
   };
 
-  services.atftpd                  = {
+  virtualisation.oci-containers    = {
+    backend                        = "docker";
+    containers."dnsmasq"           = {
+      image                        = "quay.io/poseidon/dnsmasq";
+      autoStart                    = true;
+      extraOptions                 = [
+        "--net=host"
+        "--cap-add=NET_ADMIN"
+      ];
+      cmd                          = [
+        "-d"
+        "-q"
+        "--dhcp-range=10.3.21.200,10.3.21.250,255.255.254.0,30m"
+        "--enable-tftp"
+        "--tftp-root=/var/lib/tftpboot"
+        "--dhcp-match=set:bios,option:client-arch,0"
+        "--dhcp-boot=tag:bios,undionly.kpxe"
+        "--dhcp-match=set:efi32,option:client-arch,6"
+        "--dhcp-boot=tag:efi32,ipxe.efi"
+        "--dhcp-match=set:efibc,option:client-arch,7"
+        "--dhcp-boot=tag:efibc,ipxe.efi"
+        "--dhcp-match=set:efi64,option:client-arch,9"
+        "--dhcp-boot=tag:efi64,ipxe.efi"
+        "--dhcp-userclass=set:ipxe,iPXE"
+        "--dhcp-boot=tag:ipxe,http://dns2.adrp.xyz:8080/boot.ipxe"
+        "--address=/dns2.adrp.xyz/10.3.10.6"
+        "--log-queries"
+        "--log-dhcp"
+        "--port=0"
+        "--dhcp-option=6,10.3.10.5"
+        "--log-queries"
+        "--log-dhcp"
+        "--listen-address=10.3.20.1"
+        "--interface=vlan20"
+      ];
+    };
+  };
+
+  systemd.services.docker-clear-sh = {
+    serviceConfig.Type             = "oneshot";
+    script                         = "${docker-clear-sh-script}/bin/clean-up.sh";
+  };
+
+  systemd.timers.docker-clear-sh   = {
     enable                         = true;
-    root                           = "${tftp-path}";
+    wantedBy                       = [ "timers.target" ];
+    partOf                         = [ "docker-clear-sh.service" ];
+    timerConfig                    = {
+      OnBootSec                    = "1min";
+      Unit                         = "docker-clear-sh.service";
+    };
   };
 
   systemd.services.matchbox        = {

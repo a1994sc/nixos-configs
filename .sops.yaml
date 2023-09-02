@@ -5,6 +5,10 @@ keys:
   - &dns1     age12ys8lgxx32m8a4qzhh9e0uqzcyheetanny28x9zvfr27khz47f7s0q7a9f
   - &dns2     age1q5urgt9hszq2j9p2qtprl853w6gcy9wapzt73r73xmjla4zhq98scpl8rm
 creation_rules:
+- path_regex: secrets/dhcp/[^/]+.$
+  key_groups:
+  - age:
+    - *master
 - path_regex: secrets/dns/[^/]+.$
   key_groups:
   - age:
