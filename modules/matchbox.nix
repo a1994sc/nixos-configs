@@ -9,6 +9,10 @@
   '';
 in {
 
+  imports                          = [
+    "${path}/modules/scripts/matchbox.nix"
+  ];
+
   nixpkgs.overlays                 = [
     (self: super: {
       matchbox = super.callPackage "${path}/pkgs/matchbox.nix" {};
