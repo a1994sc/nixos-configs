@@ -9,6 +9,7 @@ creation_rules:
   key_groups:
   - age:
     - *master
+    - *dns2
 - path_regex: secrets/dns/[^/]+.$
   key_groups:
   - age:
