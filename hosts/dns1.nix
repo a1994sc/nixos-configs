@@ -32,5 +32,23 @@ in {
         8443                       # PowerDNS API
       ];
     };
+    vlans.vlan20                   = {
+      id                           = 20;
+      interface                    = "eth0";
+    };
+    interfaces                     = {
+      eth0.ipv4.addresses          = [{
+        address                    = "10.3.10.5";
+        prefixLength               = 24;
+      }];
+      vlan20                       = {
+        useDHCP                    = false;
+        macAddress                 = "02:F1:A1:15:21:CF";
+        ipv4.addresses             = [{
+          address                  = "10.3.20.5";
+          prefixLength             = 23;
+        }];
+      };
+    };
   };
 }

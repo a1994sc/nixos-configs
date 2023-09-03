@@ -91,9 +91,11 @@ in {
         "--log-dhcp"
         "--port=0"
         "--dhcp-option=6,10.3.10.5"
+        "--dhcp-option=6,10.3.10.6"
+        "--dhcp-option=3.10.3.20.1"
         "--log-queries"
         "--log-dhcp"
-        "--listen-address=10.3.20.1"
+        "--listen-address=10.3.20.6"
         "--interface=vlan20"
       ];
     };

@@ -30,5 +30,23 @@ in {
         8443                       # Matchbox
       ];
     };
+    vlans.vlan20                   = {
+      id                           = 20;
+      interface                    = "eth0";
+    };
+    interfaces                     = {
+      eth0.ipv4.addresses          = [{
+        address                    = "10.3.10.6";
+        prefixLength               = 24;
+      }];
+      vlan20                       = {
+        useDHCP                    = false;
+        macAddress                 = "02:08:E1:DF:6D:0C";
+        ipv4.addresses             = [{
+          address                  = "10.3.20.6";
+          prefixLength             = 23;
+        }];
+      };
+    };
   };
 }
