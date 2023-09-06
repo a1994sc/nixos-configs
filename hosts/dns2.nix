@@ -6,6 +6,7 @@ in {
     "${path}/modules/sops.nix"
     "${path}/modules/bare.nix"
     "${path}/modules/blocky.nix"
+    "${path}/modules/matchbox.nix"
     "${path}/modules/powerdns-replica.nix"
   ];
 
@@ -19,16 +20,24 @@ in {
       "1.0.0.2"
     ];
     firewall.enable                = pkgs.lib.mkForce true;
-    firewall.interfaces.eth0       = {
-      allowedUDPPorts              = [
-        53                         # DNS
-      ];
-      allowedTCPPorts              = [
-        22                         # SSH
-        53                         # DNS
-        8080                       # Matchbox
-        8443                       # Matchbox
-      ];
+    firewall.interfaces            = let
+      FIREWALL_PORTS               = {
+        allowedUDPPorts            = [
+          53                       # DNS
+          67                       # DHCP
+          69                       # TFTP
+          4011                     # TFTP
+        ];
+        allowedTCPPorts            = [
+          22                       # SSH
+          53                       # DNS
+          8080                     # Matchbox
+          8443                     # Matchbox
+        ];
+      }; 
+    in {
+      eth0                         = (FIREWALL_PORTS);
+      vlan20                       = (FIREWALL_PORTS);
     };
     vlans.vlan20                   = {
       id                           = 20;

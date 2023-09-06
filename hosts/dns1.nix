@@ -20,17 +20,23 @@ in {
       "1.0.0.2"
     ];
     firewall.enable                = pkgs.lib.mkForce true;
-    firewall.interfaces.eth0       = {
-      allowedUDPPorts              = [
-        53                         # DNS
-      ];
-      allowedTCPPorts              = [
-        22                         # SSH
-        53                         # DNS
-        443                        # Step-CA
-        3306                       # MYSQL
-        8443                       # PowerDNS API
-      ];
+    firewall.interfaces            = let
+      FIREWALL_PORTS               = {
+        allowedUDPPorts            = [
+          53                       # DNS
+          67                       # PXE
+          69                       # PXE
+        ];
+        allowedTCPPorts            = [
+          22                       # SSH
+          53                       # DNS
+          8080                     # Matchbox
+          8443                     # Matchbox
+        ];
+      }; 
+    in {
+      eth0                         = (FIREWALL_PORTS);
+      vlan20                       = (FIREWALL_PORTS);
     };
     vlans.vlan20                   = {
       id                           = 20;

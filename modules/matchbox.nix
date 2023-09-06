@@ -2,11 +2,7 @@
   path                             = "/etc/nixos";
   user                             = "matchbox";
   data-path                        = "/var/lib/matchbox";
-  tftp-path                        = "/var/lib/atftp";
-
-  docker-clear-sh-script           = pkgs.writeShellScriptBin "clean-up.sh" ''
-    ${pkgs.docker}/bin/docker system prune --force --all
-  '';
+  tftp-path                        = "/var/lib/tftp";
 in {
 
   imports                          = [
@@ -61,58 +57,58 @@ in {
     };
   };
 
-  virtualisation.oci-containers    = {
-    backend                        = "docker";
-    containers."dnsmasq"           = {
-      image                        = "quay.io/poseidon/dnsmasq";
-      autoStart                    = true;
-      extraOptions                 = [
-        "--net=host"
-        "--cap-add=NET_ADMIN"
-      ];
-      cmd                          = [
-        "-d"
-        "-q"
-        "--dhcp-range=10.3.21.200,10.3.21.250,255.255.254.0,30m"
-        "--enable-tftp"
-        "--tftp-root=/var/lib/tftpboot"
-        "--dhcp-match=set:bios,option:client-arch,0"
-        "--dhcp-boot=tag:bios,undionly.kpxe"
-        "--dhcp-match=set:efi32,option:client-arch,6"
-        "--dhcp-boot=tag:efi32,ipxe.efi"
-        "--dhcp-match=set:efibc,option:client-arch,7"
-        "--dhcp-boot=tag:efibc,ipxe.efi"
-        "--dhcp-match=set:efi64,option:client-arch,9"
-        "--dhcp-boot=tag:efi64,ipxe.efi"
-        "--dhcp-userclass=set:ipxe,iPXE"
-        "--dhcp-boot=tag:ipxe,http://dns2.adrp.xyz:8080/boot.ipxe"
-        "--address=/dns2.adrp.xyz/10.3.10.6"
-        "--log-queries"
-        "--log-dhcp"
-        "--port=0"
-        "--dhcp-option=6,10.3.10.5"
-        "--dhcp-option=6,10.3.10.6"
-        "--dhcp-option=3.10.3.20.1"
-        "--log-queries"
-        "--log-dhcp"
-        "--listen-address=10.3.20.6"
-        "--interface=vlan20"
-      ];
+  system.activationScripts         = {
+    makeVaultWardenDir             = lib.stringAfter [ "var" ] ''
+      ${pkgs.coreutils}/bin/mkdir -p ${tftp-path}
+      if [[ ! -f ${tftp-path}/ipxe.efi ]]; then
+        ${pkgs.coreutils}/bin/echo "Download https://boot.ipxe.org/ipxe.efi to ${tftp-path}/ipxe.efi"
+        ${pkgs.curl}/bin/curl -# https://boot.ipxe.org/ipxe.efi -o ${tftp-path}/ipxe.efi
+      fi
+      if [[ ! -f ${tftp-path}/snponly.efi ]]; then
+        ${pkgs.coreutils}/bin/echo "Download https://boot.ipxe.org/snponly.efi to ${tftp-path}/snponly.efi"
+        ${pkgs.curl}/bin/curl -# https://boot.ipxe.org/snponly.efi -o ${tftp-path}/snponly.efi
+      fi
+      if [[ ! -f ${tftp-path}/ipxe-arm64.efi ]]; then
+        ${pkgs.coreutils}/bin/echo "Download https://boot.ipxe.org/arm64-efi/ipxe.efi to ${tftp-path}/ipxe-arm64.efi"
+        ${pkgs.curl}/bin/curl -# https://boot.ipxe.org/arm64-efi/ipxe.efi -o ${tftp-path}/ipxe-arm64.efi
+      fi
+      if [[ ! -f ${tftp-path}/snponly-arm64.efi ]]; then
+        ${pkgs.coreutils}/bin/echo "Download https://boot.ipxe.org/arm64-efi/snponly.efi to ${tftp-path}/snponly-arm64.efi"
+        ${pkgs.curl}/bin/curl -# https://boot.ipxe.org/arm64-efi/snponly.efi -o ${tftp-path}/snponly-arm64.efi
+      fi
+      if [[ ! -f ${tftp-path}/undionly.kpxe ]]; then
+        ${pkgs.coreutils}/bin/echo "Download https://boot.ipxe.org/undionly.kpxe to ${tftp-path}/undionly.kpxe"
+        ${pkgs.curl}/bin/curl -# https://boot.ipxe.org/undionly.kpxe -o ${tftp-path}/undionly.kpxe
+        ${pkgs.coreutils}/bin/cp ${tftp-path}/undionly.kpxe ${tftp-path}/undionly.kpxe.0
+      fi
+    '';
+  };
+
+  services                         = {
+    atftpd                         = {
+      enable                       = true;
+      root                         = "${tftp-path}";
     };
-  };
-
-  systemd.services.docker-clear-sh = {
-    serviceConfig.Type             = "oneshot";
-    script                         = "${docker-clear-sh-script}/bin/clean-up.sh";
-  };
-
-  systemd.timers.docker-clear-sh   = {
-    enable                         = true;
-    wantedBy                       = [ "timers.target" ];
-    partOf                         = [ "docker-clear-sh.service" ];
-    timerConfig                    = {
-      OnBootSec                    = "1min";
-      Unit                         = "docker-clear-sh.service";
+    dnsmasq                        = {
+      enable                       = true;
+      resolveLocalQueries          = false;
+      settings                     = {
+        dhcp-range                 = "10.3.20.1,proxy,255.255.254.0";
+        dhcp-userclass             = "set:ipxe,iPXE";
+        pxe-service                = [
+          "tag:#ipxe, X86PC     , \"Chain to iPXE\"           , undionly.kpxe                  ,10.3.20.6"
+          "tag:ipxe , X86PC     , \"iPXE\"                    , http://10.3.20.6:8080/boot.ipxe"
+          "tag:#ipxe, X86-64_EFI, \"Chain to iPXE UEFI\"      , snponly.efi                    ,10.3.20.6"
+          "tag:ipxe , X86-64_EFI, \"iPXE UEFI\"               , http://10.3.20.6:8080/boot.ipxe"
+          "tag:#ipxe, ARM32_EFI , \"Chain to ARM32 iPXE UEFI\", snponly-arm64.efi              ,10.3.20.6"
+          "tag:ipxe , ARM32_EFI , \"iPXE UEFI\"               , http://10.3.20.6:8080/boot.ipxe"
+          "tag:#ipxe, ARM64_EFI , \"Chain to ARM64 iPXE UEFI\", snponly-arm64.efi              ,10.3.20.6"
+          "tag:ipxe , ARM64_EFI , \"iPXE UEFI\"               , http://10.3.20.6:8080/boot.ipxe"
+        ];
+        port                       = 0;
+        log-queries                = true;
+        dhcp-no-override           = true;
+      };
     };
   };
 
