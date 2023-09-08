@@ -1,9 +1,6 @@
 { config, pkgs, lib, ... }: let
   db_user                          = "powerdns";
   db_tabl                          = "powerdns";
-  db_host                          = "10.3.10.5";
-  db_rep_user                      = "powerdns-rep";
-  db_rep_host                      = "10.3.10.6";
 in {
   sops.secrets                     = {
     rep-user                       = {
@@ -11,7 +8,6 @@ in {
       mode                         = "0600";
     };
     primary-env                    = {
-      owner                        = "${config.services.mysql.user}";
       sopsFile                     = /etc/nixos/secrets/dns/powerdns-primary.yml;
       mode                         = "0600";
     };
@@ -29,48 +25,47 @@ in {
     };
   };
 
-  services.mysql                   = {
+  services.postgresql              = {
     enable                         = true;
-    package                        = pkgs.mariadb;
-    initialDatabases               = [{
-      name                         = "${db_tabl}";
-      schema                       = /etc/nixos/modules/database/powerdns.sql;
-    }];
-    # ensureUsers                    = [{
-    #   name                         = "${db_user}";
-    #   ensurePermissions            = {
-    #     "${db_user}.*"             = "ALL PRIVILEGES";
-    #   };
-    # }
-    # {
-    #   name                         = "${db_rep_user}";
-    #   ensurePermissions            = {
-    #     "*.*"                      = "REPLICATION SLAVE";
-    #   };
-    # }];
+    port                           = 3306;
+    package                        = pkgs.postgresql_15;
+    dataDir                        = "/var/lib/postgresql";
+    enableTCPIP                    = true;
     settings                       = {
-      mysqld                       = {
-        server_id                  = 1;
-        log-basename               = "dns1";
-        log-error                  = "/var/lib/mysql/mysql.err";
-        log-bin                    = "/var/lib/mysql/mysql-replication.log";
-        binlog-format              = "mixed";
-      };
+      wal_level                    = "logical";
+      wal_log_hints                = "on";
+      max_wal_senders              = "8";
+      max_wal_size                 = "1GB";
+      hot_standby                  = "on";
     };
+    ensureDatabases                = [
+      "${db_tabl}"
+    ];
+    authentication                 = lib.mkForce ''
+      local  all          all                         trust
+      host   all          all           127.0.0.1/32  trust
+      host   all          all           ::1/128       trust
+      local  replication  all                         trust
+      host   replication  all           127.0.0.1/32  trust
+      host   replication  all           ::1/128       trust
+      host   replication  powerdns_rep  10.3.10.1/24  md5
+    '';
   };
 
-  systemd.services.mysql.before    = [ "pdns.service" ];
+  systemd.services.postgresql      = {
+    before                         = [ "pdns.service" ];
+  };
 
   services.powerdns                = {
     enable                         = true;
     secretFile                     = "/run/secrets/primary-env";
     extraConfig                    = ''
-      launch=gmysql
-      gmysql-host=localhost
-      gmysql-port=3306
-      gmysql-user=${db_user}
-      gmysql-dbname=${db_user}
-      gmysql-password=$POWERDNS_MYSQL_PASS
+      launch=gpgsql
+      gpgsql-host=localhost
+      gpgsql-port=3306
+      gpgsql-user=${db_user}
+      gpgsql-dbname=${db_user}
+      gpgsql-password=$POWERDNS_MYSQL_PASS
       master=yes
       api=yes
       api-key=$POWERDNS_API_PASS

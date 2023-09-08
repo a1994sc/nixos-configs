@@ -2,8 +2,7 @@
   db_user                          = "powerdns";
   db_tabl                          = "powerdns";
   pd_mast                          = "10.3.10.5";
-  db_rep_user                      = "powerdns-rep";
-  db_rep_host                      = "10.3.10.6";
+  db_rep_user                      = "powerdns_rep";
 in {
   sops.secrets                     = {
     rep-user                       = {
@@ -11,48 +10,33 @@ in {
       mode                         = "0600";
     };
     replica-env                    = {
-      owner                        = "${config.services.mysql.user}";
       sopsFile                     = /etc/nixos/secrets/dns/powerdns-replica.yml;
       mode                         = "0600";
     };
   };
 
-  services.mysql                   = {
+  # https://www.cherryservers.com/blog/how-to-set-up-postgresql-database-replication
+  services.postgresql              = {
     enable                         = true;
-    package                        = pkgs.mariadb;
-    initialDatabases               = [{
-      name                         = "${db_tabl}";
-      schema                       = /etc/nixos/modules/database/powerdns.sql;
-    }];
-    # ensureUsers                    = [{
-    #   name                         = "${db_user}";
-    #   ensurePermissions            = {
-    #     "${db_user}.*"             = "ALL PRIVILEGES";
-    #   };
-    # }];
-    settings                       = {
-      mysqld                       = {
-        server_id                  = 2;
-        log-basename               = "dns2";
-        log-error                  = "/var/lib/mysql/mysql.err";
-        log-bin                    = "/var/lib/mysql/mysql-replication.log";
-        binlog-format              = "mixed";
-      };
-    };
+    port                           = 3306;
+    package                        = pkgs.postgresql_15;
+    dataDir                        = "/var/lib/postgresql";
   };
 
-  systemd.services.mysql.before    = [ "pdns.service" ];
+  systemd.services.postgresql      = {
+    before                         = [ "pdns.service" ];
+  };
 
   services.powerdns                = {
     enable                         = true;
     secretFile                     = "/run/secrets/replica-env";
     extraConfig                    = ''
-      launch=gmysql
-      gmysql-host=localhost
-      gmysql-port=3306
-      gmysql-user=${db_user}
-      gmysql-dbname=${db_user}
-      gmysql-password=$POWERDNS_MYSQL_PASS
+      launch=gpgsql
+      gpgsql-host=localhost
+      gpgsql-port=3306
+      gpgsql-user=${db_user}
+      gpgsql-dbname=${db_user}
+      gpgsql-password=$POWERDNS_MYSQL_PASS
       master=no
       slave=yes
       slave-cycle-interval=60

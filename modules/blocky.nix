@@ -4,13 +4,26 @@ in {
   services                         = {
     blocky.enable                  = true;
     blocky.settings                = {
-      upstream.default             = [ "127.0.0.1:8155" ];
+      # upstreams                    = {
+      #   groups.default             = [ "127.0.0.1:8155" ];
+      #   timeout                    = "15s";
+      # };
+      upstream.default             = [ "127.0.0.1:8155" ];     # Deprecated
       bootstrapDns                 = "1.1.1.1";
-      upstreamTimeout              = "2s";
+      upstreamTimeout              = "2s";                     # Deprecated
       startVerifyUpstream          = true;
       connectIPVersion             = "dual";
       minTlsServeVersion           = "1.3";
       blocking                     = {
+        # loading                    = {
+        #   refreshPeriod            = "4h";
+        #   startStrategy            = "blocking";
+        #   downloads                = {
+        #     timeout                = "4m";
+        #     attempts               = 5;
+        #     cooldown               = "10s";
+        #   };
+        # };
         blackLists.ads             = [
           "https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt"
           "https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts"
@@ -24,10 +37,10 @@ in {
         blockType                  = "zeroIp";
         blockTTL                   = "1m";
         refreshPeriod              = "4h";
-        downloadTimeout            = "4m";
-        downloadAttempts           = 5;
-        downloadCooldown           = "10s";
-        startStrategy              = "blocking";
+        downloadTimeout            = "4m";                     # Deprecated
+        downloadAttempts           = 5;                        # Deprecated
+        downloadCooldown           = "10s";                    # Deprecated
+        startStrategy              = "blocking";               # Deprecated
       };
 
       prometheus.enable            = false;
@@ -86,6 +99,9 @@ in {
       };
     };
   };
+
+  systemd.services.dnsdist.before  = [ "unbound.service" ];
+  systemd.services.unbound.before  = [ "blocky.service" ];
 
   boot.kernel.sysctl               = {
     "net.core.rmem_max"            = 1048576;
