@@ -29,7 +29,9 @@ in {
     settings                       = {
       dnsNames                     = [
         "10.3.10.5"
+        "10.3.20.5"
         "dns1.adrp.xyz"
+        "step.adrp.xyz"
       ];
       root                         = "${nixos-path}/certs/derpy.crt";
       crt                          = "${nixos-path}/certs/derpy-jump.crt";

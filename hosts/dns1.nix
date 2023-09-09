@@ -30,10 +30,11 @@ in {
         allowedTCPPorts            = [
           22                       # SSH
           53                       # DNS
+          3306                     # DNS
           8080                     # Matchbox
           8443                     # Matchbox
         ];
-      }; 
+      };
     in {
       eth0                         = (FIREWALL_PORTS);
       vlan20                       = (FIREWALL_PORTS);

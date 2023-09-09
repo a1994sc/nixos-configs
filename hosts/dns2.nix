@@ -34,7 +34,7 @@ in {
           8080                     # Matchbox
           8443                     # Matchbox
         ];
-      }; 
+      };
     in {
       eth0                         = (FIREWALL_PORTS);
       vlan20                       = (FIREWALL_PORTS);
