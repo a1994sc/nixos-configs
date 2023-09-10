@@ -30,9 +30,9 @@ in {
         allowedTCPPorts            = [
           22                       # SSH
           53                       # DNS
+          443                      # STEP-CA
           3306                     # DNS
-          8080                     # Matchbox
-          8443                     # Matchbox
+          8443                     # PowerDNS API
         ];
       };
     in {
