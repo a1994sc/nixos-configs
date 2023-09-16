@@ -94,6 +94,16 @@ in {
           proxyPass                = "http://127.0.0.1:8081/";
         };
       };
+      "machine"                    = {
+        addSSL                     = true;
+        sslCertificate             = config.sops.secrets.tls-crt.path;
+        sslCertificateKey          = config.sops.secrets.tls-key.path;
+        serverName                 = "10.3.20.5";
+        listen                     = [{port = 8443;  addr="0.0.0.0"; ssl=true;}];
+        locations."/"              = {
+          proxyPass                = "http://127.0.0.1:8081/";
+        };
+      };
       "dns1"                       = {
         addSSL                     = true;
         sslCertificate             = config.sops.secrets.tls-crt.path;
