@@ -35,10 +35,10 @@ in {
     ${config.users.users.acme.name} ALL=(ALL) NOPASSWD: GAME_CMDS
   '';
 
-  services.netbox                  = {
-    enable                         = true;
-    secretKeyFile                  = "${config.sops.secrets.netbox.path}";
-  };
+  # services.netbox                  = {
+  #   enable                         = true;
+  #   secretKeyFile                  = "${config.sops.secrets.netbox.path}";
+  # };
 
   sops.secrets.netbox              = {
     sopsFile                       = "/etc/nixos/secrets/dns/netbox.yml";

@@ -32,6 +32,7 @@ in {
         allowedTCPPorts            = [
           22                       # SSH
           53                       # DNS
+          443                      # Netbox
           8080                     # Matchbox
           8443                     # Matchbox
         ];
