@@ -1,18 +1,19 @@
 { config, pkgs, lib, ... }: let
   ip = let eth = __elemAt config.networking.interfaces.eth0.ipv4.addresses 0; in eth.address;
-  server                           = "10.2.1.9";
+  server                           = "10.3.10.5";
   key                              = "key.pem";
   cert                             = "cert.pem";
   fullchain                        = "fullchain.pem";
   port                             = "8081";
+  hostname                         = "${config.networking.fqdn}";
 
   acme-sh-script                   = pkgs.writeShellScriptBin "acme-certs.sh" ''
-    ${pkgs.acme-sh}/bin/acme.sh --issue --standalone -d ${ip}.nip.io -d ${ip} --server https://${server}/acme/acme/directory --ca-bundle /etc/nixos/certs/derpy.crt --fullchain-file ${config.users.users.acme.home}/${fullchain} --cert-file ${config.users.users.acme.home}/${cert} --key-file ${config.users.users.acme.home}/${key} --httpport ${port} --force
+    ${pkgs.acme-sh}/bin/acme.sh --issue --standalone -d ${hostname} -d ${ip}.nip.io -d ${ip} --server https://${server}/acme/acme/directory --ca-bundle /etc/nixos/certs/derpy.crt --fullchain-file ${config.users.users.acme.home}/${fullchain} --cert-file ${config.users.users.acme.home}/${cert} --key-file ${config.users.users.acme.home}/${key} --httpport ${port} --force
     /run/wrappers/bin/sudo ${pkgs.systemd}/bin/systemctl reload nginx
   '';
 
   acme-sh-script-init              = pkgs.writeShellScriptBin "acme-certs.sh" ''
-    ${pkgs.acme-sh}/bin/acme.sh --issue --standalone -d ${ip}.nip.io -d ${ip} --server https://${server}/acme/acme/directory --ca-bundle /etc/nixos/certs/derpy.crt --fullchain-file ${config.users.users.acme.home}/${fullchain} --cert-file ${config.users.users.acme.home}/${cert} --key-file ${config.users.users.acme.home}/${key} --force
+    ${pkgs.acme-sh}/bin/acme.sh --issue --standalone -d ${hostname} -d ${ip}.nip.io -d ${ip} --server https://${server}/acme/acme/directory --ca-bundle /etc/nixos/certs/derpy.crt --fullchain-file ${config.users.users.acme.home}/${fullchain} --cert-file ${config.users.users.acme.home}/${cert} --key-file ${config.users.users.acme.home}/${key} --force
     ${pkgs.coreutils-full}/bin/chown ${config.users.users.acme.name}:${config.users.users.acme.group} -R ${config.users.users.acme.home}
   '';
 in {
@@ -55,8 +56,8 @@ in {
           listen                   = [{port = 80;  addr="0.0.0.0"; ssl=false;}];
           locations."/".proxyPass  = "http://127.0.0.1:${port}/";
         };
-        "nip"                      = {
-          serverName               = "${ip}.nip.io";
+        "host"                     = {
+          serverName               = "${hostname}";
           listen                   = [{port = 80;  addr="0.0.0.0"; ssl=false;}];
           locations."/".proxyPass  = "http://127.0.0.1:${port}/";
         };

@@ -5,7 +5,6 @@ in {
     "${path}/modules/main-config.nix"
     "${path}/modules/sops.nix"
     "${path}/modules/bare.nix"
-    # "${path}/modules/netbox.nix"
     "${path}/modules/blocky.nix"
     "${path}/modules/matchbox.nix"
     "${path}/modules/powerdns-replica.nix"
