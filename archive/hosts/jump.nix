@@ -35,7 +35,7 @@ in
       #   ipv4.addresses = [ {
       #     address = "10.2.1.9";
       #     prefixLength = 24;
-      #   } ]; 
+      #   } ];
     };
     nameservers = [
       "1.1.1.2"

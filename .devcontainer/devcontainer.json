@@ -7,7 +7,7 @@
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/code/.ssh,type=bind,readonly",
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/code/.kube,type=bind,readonly"
   ],
-  "runArgs": [ 
+  "runArgs": [
     "--userns=keep-id:uid=1000,gid=1000"
   ],
   "customizations": {
