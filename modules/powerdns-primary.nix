@@ -66,7 +66,7 @@ in {
       gpgsql-user=${db_user}
       gpgsql-dbname=${db_user}
       gpgsql-password=$POWERDNS_MYSQL_PASS
-      master=yes
+      primary=yes
       api=yes
       api-key=$POWERDNS_API_PASS
       webserver=yes

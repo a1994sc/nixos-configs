@@ -10,6 +10,9 @@ in {
     "${path}/modules/powerdns-replica.nix"
   ];
 
+  # Fixed issues where the dell wyse cpu locks up on idel.
+  boot.kernelParams = [ "intel_idle.max_cstate=1" ];
+
   nix.gc.dates                     = "Fri 02:00";
   system.autoUpgrade.dates         = "Fri 04:00";
   boot.kernelPackages              = pkgs.linuxKernel.packages.linux_5_15;

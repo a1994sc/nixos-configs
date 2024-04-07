@@ -10,9 +10,46 @@ in {
   ];
 
   nixpkgs.overlays                 = [
-    (self: super: {
-      matchbox = super.callPackage "${path}/pkgs/matchbox.nix" {};
-    })
+    (self: super:
+      let
+        version = "0.11.0";
+        pname = "matchbox";
+
+        ldflags = [
+          "-w"
+          "-X 'github.com/poseidon/matchbox/matchbox/version.Version=v${version}'"
+        ];
+
+        vendorHash = "sha256-sVC4xeQIcqAbKU4MOAtNicHcioYjdsleQwKWLstnjfk=";
+        srcSHA256 = "sha256-u1VY+zEx2YToz+WxVFaUDzY7HM9OeokbR/FmzcR3UJ8=";
+      in
+      {
+        matchbox = super.pkgs.buildGoModule {
+          inherit version pname vendorHash;
+
+          src = pkgs.fetchFromGitHub {
+            owner = "poseidon";
+            repo = "matchbox";
+            rev = "v${version}";
+            sha256 = srcSHA256;
+          };
+
+          buildPhase =
+            let
+              args = builtins.concatStringsSep " " ldflags;
+            in
+            ''
+              mkdir bin
+              go build -o bin/${pname} -ldflags "${args}" cmd/matchbox/main.go
+            '';
+
+          installPhase = ''
+            install -dm755 $out/bin
+            mv bin/${pname} $out/bin/${pname}
+          '';
+        };
+      }
+    )
   ];
 
   environment.systemPackages       = with pkgs; [
