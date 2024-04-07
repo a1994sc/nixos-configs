@@ -3,7 +3,7 @@
 {
   nixpkgs.overlays = [
     (self: super: {
-      small-cli = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/smallstep/cli.nix {};
+      small-cli = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/smallstep/cli.nix { };
     })
   ];
 

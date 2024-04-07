@@ -1,8 +1,10 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   docker-clear-sh-script = pkgs.writeShellScriptBin "clean-up.sh" ''
     ${pkgs.docker}/bin/docker system prune --force --all
   '';
-in {
+in
+{
   virtualisation.oci-containers.backend = "docker";
 
   systemd.services.docker-clear-sh = {

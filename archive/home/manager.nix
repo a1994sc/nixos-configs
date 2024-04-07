@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ...}: 
+{ config, lib, pkgs, ... }:
 
 {
   # Run the following commands before adding this module.

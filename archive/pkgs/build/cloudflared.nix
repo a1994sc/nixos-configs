@@ -6,10 +6,10 @@ buildGoModule rec {
   version = "2022.10.3";
 
   src = fetchFromGitHub {
-    owner  = "cloudflare";
-    repo   = "cloudflared";
-    rev    = version;
-    hash   = "sha256-o1+j8OaDg6cjAOKXXsXo535VjcEDkG+DaMRW7qa/sRU=";
+    owner = "cloudflare";
+    repo = "cloudflared";
+    rev = version;
+    hash = "sha256-o1+j8OaDg6cjAOKXXsXo535VjcEDkG+DaMRW7qa/sRU=";
   };
 
   vendorSha256 = null;

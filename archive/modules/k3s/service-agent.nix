@@ -1,4 +1,5 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   kubeletConfig = pkgs.writeText "k3s_kubelet.yaml"
     ''
       apiVersion: kubelet.config.k8s.io/v1beta1
@@ -7,7 +8,8 @@
       shutdownGracePeriod: 30s
       shutdownGracePeriodCriticalPods: 10s
     '';
-in {
+in
+{
   sops.secrets.token.sopsFile = /etc/nixos/modules/k3s/secrets/agent.yaml;
 
   systemd.services.k3s-agent = {

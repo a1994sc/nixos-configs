@@ -3,7 +3,7 @@
 {
   nixpkgs.overlays = [
     (self: super: {
-      small-ca = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/smallstep/certificate.nix {};
+      small-ca = super.callPackage /etc/nixos/pkgs/prebuilt/amd64/smallstep/certificate.nix { };
     })
   ];
 

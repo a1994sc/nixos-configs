@@ -1,4 +1,5 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
 
 in {
   environment.systemPackages = [

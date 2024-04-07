@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 let
   path = "/etc/nixos";
-in {
+in
+{
   imports = [
     "${path}/modules/main-config.nix"
     "${path}/modules/bare.nix"
@@ -31,10 +32,10 @@ in {
     # };
     interfaces.eth0 = {
       useDHCP = pkgs.lib.mkForce true;
-    #   ipv4.addresses = [ {
-    #     address = "10.2.1.9";
-    #     prefixLength = 24;
-    #   } ]; 
+      #   ipv4.addresses = [ {
+      #     address = "10.2.1.9";
+      #     prefixLength = 24;
+      #   } ]; 
     };
     nameservers = [
       "1.1.1.2"

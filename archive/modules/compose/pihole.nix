@@ -1,9 +1,11 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   piholeResolv = pkgs.writeText "resolv.conf"
     ''
       nameserver 127.0.0.1
     '';
-in {
+in
+{
   imports = [
     ./.
   ];

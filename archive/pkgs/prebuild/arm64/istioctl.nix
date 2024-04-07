@@ -1,9 +1,11 @@
-{ pkgs ? import <nixpkgs> {} }: let
+{ pkgs ? import <nixpkgs> { } }:
+let
   name = "istioctl";
   version = "1.15.0";
   arch = "arm64";
   sha = "f0a6e02751aa8947012c484957e57aa8a0202c5e7e4003dd762a3d225c78a10a";
-in  pkgs.stdenv.mkDerivation {
+in
+pkgs.stdenv.mkDerivation {
   name = "${name}";
   version = "${version}";
 

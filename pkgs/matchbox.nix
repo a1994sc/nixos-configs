@@ -1,9 +1,11 @@
-{ pkgs ? import <nixpkgs> {} }:let
+{ pkgs ? import <nixpkgs> { } }:
+let
   name = "matchbox";
   version = "v0.10.0";
   arch = "amd64";
   sha = "f43e8de2c5ceab824d813dfcbe420c7a78f8af05239d6b956299afa15ea6897c";
-in pkgs.stdenv.mkDerivation {
+in
+pkgs.stdenv.mkDerivation {
   name = "${name}";
   version = "${version}";
 

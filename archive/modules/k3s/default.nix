@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ...}: 
+{ config, lib, pkgs, ... }:
 
 {
-  imports = [ 
+  imports = [
     /etc/nixos/modules/k3s/addons/ceph.nix
     /etc/nixos/modules/k3s/addons/istio.nix
   ];

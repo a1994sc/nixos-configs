@@ -1,7 +1,8 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
 
 in {
-  imports = [ 
+  imports = [
     /etc/nixos/modules/compose/docker.nix
   ];
 

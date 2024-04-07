@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ...}: 
+{ config, lib, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -10,8 +10,8 @@
   ];
 
   system.activationScripts.cluster-fix = ''
-      ln -sfn /run/current-system/sw/bin/* /bin/
-    '';
+    ln -sfn /run/current-system/sw/bin/* /bin/
+  '';
 
   boot.kernelModules = [
     "rbd"

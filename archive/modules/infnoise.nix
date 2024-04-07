@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
- # nixpkgs.overlays = [
- #   (self: super: {
- #     infnoise = super.callPackage /etc/nixos/pkgs/build/infnoise.nix {};
- #   })
- # ];
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     infnoise = super.callPackage /etc/nixos/pkgs/build/infnoise.nix {};
+  #   })
+  # ];
 
   environment.systemPackages = with pkgs; [
     infnoise
@@ -26,9 +26,9 @@
     # Service
     serviceConfig = {
       Type = "forking";
-      WorkingDirectory="/tmp";
+      WorkingDirectory = "/tmp";
       ExecStart = "${pkgs.infnoise}/bin/infnoise --dev-random --daemon --pidfile /var/run/infnoise.pid";
-      User= "root";
+      User = "root";
       Group = "root";
       Restart = "always";
     };

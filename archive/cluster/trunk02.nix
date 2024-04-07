@@ -2,7 +2,7 @@
 
 {
   imports =
-    [ 
+    [
       /etc/nixos/modules/k3s/arm64/server.nix
       /etc/nixos/modules/raspberry-pi.nix
       /etc/nixos/modules/main-config.nix

@@ -1,9 +1,10 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 let
   name = "smallstep/cli";
   version = "0.21.0";
   arch = "amd64";
-in pkgs.stdenv.mkDerivation {
+in
+pkgs.stdenv.mkDerivation {
   name = "${name}";
   version = "${version}";
 

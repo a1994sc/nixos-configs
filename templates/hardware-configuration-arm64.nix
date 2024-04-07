@@ -5,25 +5,27 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-#  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
-  boot.initrd.availableKernelModules = [  ];
+  #  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [ ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device  = "/dev/disk/by-label/NIXOS_SD";
-      fsType  = "ext4";
+    {
+      device = "/dev/disk/by-label/NIXOS_SD";
+      fsType = "ext4";
       options = [ "noatime" ];
     };
 
-#  fileSystems."/tmp" =
-#    { fsType  = "tmpfs";
-#      options = [ "rw" "nodev" "nosuid" "size=8G" ];
-#    };
+  #  fileSystems."/tmp" =
+  #    { fsType  = "tmpfs";
+  #      options = [ "rw" "nodev" "nosuid" "size=8G" ];
+  #    };
 
   swapDevices = [ ];
 

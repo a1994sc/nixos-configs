@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   path = "/etc/nixos";
-in {
-  imports =[
+in
+{
+  imports = [
     "${path}/modules/sops.nix"
     "${path}/modules/step-ca.nix"
     # "${path}/modules/wireguard.nix"
