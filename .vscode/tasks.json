@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "command": "find . -iname '*.nix' -prune | xargs -n 20000 echo | xargs nixpkgs-fmt",
+      "group": {
+        "isDefault": false,
+        "kind": "build"
+      },
+      "label": "format",
+      "type": "shell"
+    }
+  ]
+}

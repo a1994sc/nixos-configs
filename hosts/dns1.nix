@@ -10,6 +10,7 @@ in
     "${path}/modules/blocky.nix"
     "${path}/modules/step-ca.nix"
     "${path}/modules/powerdns-primary.nix"
+    <agenix/modules/age.nix>
   ];
 
   # Fixed issues where the dell wyse cpu locks up on idel.
