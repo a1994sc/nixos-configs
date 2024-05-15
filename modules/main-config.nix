@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    "${path}/modules/ca-certs.nix"
+    ./ca-certs.nix
   ];
 
   programs.bash.enableCompletion = true;
@@ -77,7 +77,7 @@ in
   system.autoUpgrade = {
     enable = true;
     allowReboot = true;
-    channel = https://nixos.org/channels/nixos-unstable;
+    channel = "https://nixos.org/channels/nixos-unstable";
   };
 
   services.openssh = {

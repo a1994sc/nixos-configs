@@ -1,7 +1,7 @@
 let
   machines = {
     puck = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBZMMkE2X2n+tRKOqjXnoPXHiISv2gz6d6QOUbKtygD"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAZaQwDJxTMR4S6yQjuqoDj2c8r6e588kW1wcm0zquRM"
       "age1zsuk65xk39mdnewvm4z8mhp5r9ry36lfuafvp4d460a9vezpduxsnhwa75"
     ];
     dns1 = [
@@ -17,6 +17,7 @@ let
   system.allen = [
     "age1yubikey1q20jh97qrk9kspzfmh4hrs8qgvuq34lvhm2pum9dae7p97gq78tsghyyha3"
     "age1yubikey1qf42tcrzealy89zpmat6c9fzza9pgt8f3nwl42pvj7sk7lllf623vmjq30d"
+    "age1yubikey1q0kv8am08zj3pdakl8407xd8j0qxxytzwqx09vrtk64dsw2r5qragk5kd4f"
   ];
 
   secrets = {
